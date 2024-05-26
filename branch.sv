@@ -6,7 +6,7 @@ module branch (
     input logic [31:0] offset,
     input logic [2:0] opcode,
     input logic enable_n,
-    inout logic new_program_counter
+    inout logic [31:0] new_program_counter
 );
 
     logic compare_success;
