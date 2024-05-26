@@ -1,6 +1,5 @@
 use std::{fs::File, io::Write};
 
-use itertools::Itertools;
 use rand::{rngs::StdRng, Rng, SeedableRng};
 
 #[derive(Clone)]
@@ -11,6 +10,10 @@ struct Registers {
 impl Registers {
     pub fn new() -> Registers {
         Registers { regs: [0; 31] }
+    }
+
+    pub fn reset(&mut self) {
+        self.regs = [0; 31];
     }
 
     pub fn get(&self, n: u8) -> u32 {
@@ -26,24 +29,36 @@ impl Registers {
         }
         self.regs[n as usize - 1] = value;
     }
+
+    pub fn gen_assert(&self, rng: &mut StdRng) -> RegisterAssert {
+        let addr = rng.gen_range(0..=31);
+        let value = self.get(addr);
+        RegisterAssert { addr, value }
+    }
+}
+
+struct RegisterAssert {
+    addr: u8,
+    value: u32,
 }
 
 struct TestOp {
+    reset_n: bool,
     store: (u8, u32),
-    assert: Registers,
+    assert: [RegisterAssert; 2],
 }
 
 impl TestOp {
     fn gen_test(&self) -> String {
-        let asrt = self
-            .assert
-            .regs
-            .iter()
-            .map(|x| format!("{x:08x}"))
-            .join("_");
         format!(
-            "{:02x}_{:08x}__00000000_{}\n",
-            self.store.0, self.store.1, asrt
+            "{:x}_{:02x}_{:08x}__{:02x}_{:08x}__{:02x}_{:08x}\n",
+            if self.reset_n { 1 } else { 0 },
+            self.store.0,
+            self.store.1,
+            self.assert[0].addr,
+            self.assert[0].value,
+            self.assert[1].addr,
+            self.assert[1].value
         )
     }
 }
@@ -52,14 +67,28 @@ fn main() {
     let mut regs = Registers::new();
 
     let mut rng = StdRng::seed_from_u64(1234567890123);
-    let mut of = File::create("register_tests.sv").unwrap();
-    for _ in 0..100 {
+    let mut of = File::create("register_tests.tv").unwrap();
+    for _ in 0..500 {
         let store_addr = rng.gen_range(0..=31);
         let value = rng.gen();
-        regs.set(store_addr, value);
+
+        let reset = rng.gen_ratio(1, 100);
+
+        if reset {
+            regs.reset();
+        }
+
+        let a0 = regs.gen_assert(&mut rng);
+        let a1 = regs.gen_assert(&mut rng);
+
+        if !reset {
+            regs.set(store_addr, value);
+        }
+
         let op = TestOp {
+            reset_n: !reset,
             store: (store_addr, value),
-            assert: regs.clone(),
+            assert: [a0, a1],
         };
         of.write_all(op.gen_test().as_bytes()).unwrap();
     }
