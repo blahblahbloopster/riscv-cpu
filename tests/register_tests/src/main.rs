@@ -97,10 +97,6 @@ fn gen_single_reg_tests() {
         // rst, data, store, en_a, en_b, a, b
         let rst_n = rng.gen_ratio(80, 100);
 
-        if !rst_n {
-            value = 0;
-        }
-
         let load_a = rng.gen_ratio(1, 2);
 
         let load_b = rng.gen_ratio(1, 2);
@@ -113,6 +109,10 @@ fn gen_single_reg_tests() {
 
         if store {
             value = store_value;
+        }
+
+        if !rst_n {
+            value = 0;
         }
 
         // reset, store enable, load a, load b, store value, a, b
