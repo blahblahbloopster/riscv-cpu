@@ -83,7 +83,7 @@ impl Intify for Option<u32> {
     fn stringify(&self) -> String {
         match self {
             Some(v) => format!("{v:08x}"),
-            None => "xxxxxxxx".to_owned(),
+            None => "zzzzzzzz".to_owned(),
         }
     }
 }
@@ -115,7 +115,7 @@ fn gen_single_reg_tests() {
             value = store_value;
         }
 
-        // reset, load a, load b, store, store value, a, b
+        // reset, store enable, load a, load b, store value, a, b
         println!(
             "{}__{}__{}_{}__{}__{}_{}",
             rst_n.stringify(),
