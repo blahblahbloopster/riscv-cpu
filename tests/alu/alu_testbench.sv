@@ -49,7 +49,7 @@ module alu_testbench();
         if (current_vector === 100'bx) begin
             $display("%d tests completed with %d errors",
                      vector_num, num_errors);
-            $stop;
+            $finish;
         end
     end
 

@@ -5,7 +5,7 @@ module alu (input  logic [3:0]  opcode,
     logic [4:0] shift;
      
     always_comb begin
-	shift = b & 32'h1f;
+	shift = b[4:0];
         case(opcode[2:0])
             0: d = a + (opcode[3] ? -b : b);
             1: d = a << shift;
