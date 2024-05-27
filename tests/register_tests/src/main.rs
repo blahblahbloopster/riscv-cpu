@@ -63,6 +63,31 @@ impl TestOp {
     }
 }
 
+trait Intify {
+    fn stringify(&self) -> String;
+}
+
+impl Intify for bool {
+    fn stringify(&self) -> String {
+        if *self { "1" } else { "0" }.to_owned()
+    }
+}
+
+impl Intify for u32 {
+    fn stringify(&self) -> String {
+        format!("{self:08x}")
+    }
+}
+
+impl Intify for Option<u32> {
+    fn stringify(&self) -> String {
+        match self {
+            Some(v) => format!("{v:08x}"),
+            None => "xxxxxxxx".to_owned(),
+        }
+    }
+}
+
 fn gen_single_reg_tests() {
     let mut rng = StdRng::seed_from_u64(1234567890123);
 
@@ -92,20 +117,14 @@ fn gen_single_reg_tests() {
 
         // reset, load a, load b, store, store value, a, b
         println!(
-            "{:x}_{:x}_{:x}__{:x}_{:08x}___{}_{}",
-            if rst_n { 1 } else { 0 },
-            if load_a { 1 } else { 0 },
-            if load_b { 1 } else { 0 },
-            if store { 1 } else { 0 },
-            store_value,
-            match a {
-                Some(v) => format!("{v:08x}"),
-                None => "zzzzzzzz".to_owned(),
-            },
-            match b {
-                Some(v) => format!("{v:08x}"),
-                None => "zzzzzzzz".to_owned(),
-            }
+            "{}__{}__{}_{}__{}__{}_{}",
+            rst_n.stringify(),
+            store.stringify(),
+            load_a.stringify(),
+            load_b.stringify(),
+            store_value.stringify(),
+            a.stringify(),
+            b.stringify()
         )
     }
 }
