@@ -63,7 +63,56 @@ impl TestOp {
     }
 }
 
+fn gen_single_reg_tests() {
+    let mut rng = StdRng::seed_from_u64(1234567890123);
+
+    let mut value = 0;
+
+    for _ in 0..500 {
+        // rst, data, store, en_a, en_b, a, b
+        let rst_n = rng.gen_ratio(80, 100);
+
+        if !rst_n {
+            value = 0;
+        }
+
+        let load_a = rng.gen_ratio(1, 2);
+
+        let load_b = rng.gen_ratio(1, 2);
+
+        let store = rng.gen_ratio(1, 2);
+        let store_value: u32 = rng.gen();
+
+        let a = if load_a { Some(value) } else { None };
+        let b = if load_b { Some(value) } else { None };
+
+        if store {
+            value = store_value;
+        }
+
+        // reset, load a, load b, store, store value, a, b
+        println!(
+            "{:x}_{:x}_{:x}__{:x}_{:08x}___{}_{}",
+            if rst_n { 1 } else { 0 },
+            if load_a { 1 } else { 0 },
+            if load_b { 1 } else { 0 },
+            if store { 1 } else { 0 },
+            store_value,
+            match a {
+                Some(v) => format!("{v:08x}"),
+                None => "zzzzzzzz".to_owned(),
+            },
+            match b {
+                Some(v) => format!("{v:08x}"),
+                None => "zzzzzzzz".to_owned(),
+            }
+        )
+    }
+}
+
 fn main() {
+    gen_single_reg_tests();
+    return;
     let mut regs = Registers::new();
 
     let mut rng = StdRng::seed_from_u64(1234567890123);
