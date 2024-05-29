@@ -15,8 +15,8 @@ module alu (input  logic [3:0]  opcode,
             5: d = opcode[3] ? ($signed(a) >>> shift) : ($signed(a) >> shift);
             6: d = a | b;
             7: d = a & b;
-        endcase;
-    end;
+        endcase
+    end
 
 endmodule
 

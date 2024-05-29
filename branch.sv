@@ -27,7 +27,7 @@ module branch (
     end
 
     assign jump = compare_success & ~enable_n;
-    assign new_program_counter = program_counter + (jump ? value : 4);
+    assign new_program_counter = program_counter + (jump ? offset : 4);
 
 endmodule
 
