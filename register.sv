@@ -7,11 +7,11 @@ module register (
     input logic enable_a,
     input logic enable_b,
     input logic [`XLEN-1:0] data,
-    inout logic [`XLEN-1:0] a_out,
-    inout logic [`XLEN-1:0] b_out
+    output logic [`XLEN-1:0] a_out,
+    output logic [`XLEN-1:0] b_out
 );
 
-    reg [`XLEN-1:0] value;
+    reg [`XLEN-1:0] value = 0;
 
     always @(posedge clk) begin
         if (!reset_n) begin
