@@ -1,0 +1,152 @@
+# Current time Mon May 27 15:01:26 2024
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = "linuxaloem"
+# Signature = fa4d3e95ccc4dcaa70644b276588aa2d
+# 0    0x086c719a: '<unknown (@0x86c719a)>'
+# 1    0x083ea8b6: '<unknown (@0x83ea8b6)>'
+# 2    0x083fcd4c: '<unknown (@0x83fcd4c)>'
+# 3    0x083aba39: '<unknown (@0x83aba39)>'
+# 4    0xf68a255a: '/home/quinn/osu/ece271/riscv-cpu/tests/register/register_testbench.sv:66'
+# 5    0x08dcf9a5: '<unknown (@0x8dcf9a5)>'
+# 6    0x08131d92: '<unknown (@0x8131d92)>'
+# 7    0x082b8656: '<unknown (@0x82b8656)>'
+# 8    0x087d108a: '<unknown (@0x87d108a)>'
+# 9    0x087d648c: '<unknown (@0x87d648c)>'
+# 10   0x087d80a7: '<unknown (@0x87d80a7)>'
+# 11   0x08a9a3b9: '<unknown (@0x8a9a3b9)>'
+# 12   0x092365cb: '<unknown (@0x92365cb)>'
+# 13   0x09235bba: '<unknown (@0x9235bba)>'
+# 14   0x0923b143: '<unknown (@0x923b143)>'
+# 15   0x0923b25a: '<unknown (@0x923b25a)>'
+# 16   0x0923c901: '<unknown (@0x923c901)>'
+# 17   0x0923cc76: '<unknown (@0x923cc76)>'
+# 18   0x08d20173: '<unknown (@0x8d20173)>'
+# 19   0x092e4977: '<unknown (@0x92e4977)>'
+# 20   0x0933ec3c: '<unknown (@0x933ec3c)>'
+# 21   0x09341a98: '<unknown (@0x9341a98)>'
+# 22   0x092fde68: '<unknown (@0x92fde68)>'
+# 23   0x092fe175: '<unknown (@0x92fe175)>'
+# 24   0x090ec6c0: '<unknown (@0x90ec6c0)>'
+# 25   0x0879fb79: '<unknown (@0x879fb79)>'
+# 26   0x0863aebb: '<unknown (@0x863aebb)>'
+# End of Stack Trace
+
+
+# Current time Mon May 27 15:02:32 2024
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = "linuxaloem"
+# Signature = fa4d3e95ccc4dcaa70644b276588aa2d
+# 0    0x086c719a: '<unknown (@0x86c719a)>'
+# 1    0x083ea8b6: '<unknown (@0x83ea8b6)>'
+# 2    0x083fcd4c: '<unknown (@0x83fcd4c)>'
+# 3    0x083aba39: '<unknown (@0x83aba39)>'
+# 4    0xf68a2569: '/home/quinn/osu/ece271/riscv-cpu/tests/register/register_testbench.sv:67'
+# 5    0x08dcf9a5: '<unknown (@0x8dcf9a5)>'
+# 6    0x08131d92: '<unknown (@0x8131d92)>'
+# 7    0x082b8656: '<unknown (@0x82b8656)>'
+# 8    0x087d108a: '<unknown (@0x87d108a)>'
+# 9    0x087d648c: '<unknown (@0x87d648c)>'
+# 10   0x087d80a7: '<unknown (@0x87d80a7)>'
+# 11   0x08a9a3b9: '<unknown (@0x8a9a3b9)>'
+# 12   0x092365cb: '<unknown (@0x92365cb)>'
+# 13   0x09235bba: '<unknown (@0x9235bba)>'
+# 14   0x0923b143: '<unknown (@0x923b143)>'
+# 15   0x0923b25a: '<unknown (@0x923b25a)>'
+# 16   0x0923c901: '<unknown (@0x923c901)>'
+# 17   0x0923cc76: '<unknown (@0x923cc76)>'
+# 18   0x08d20173: '<unknown (@0x8d20173)>'
+# 19   0x092e4977: '<unknown (@0x92e4977)>'
+# 20   0x0933ec3c: '<unknown (@0x933ec3c)>'
+# 21   0x09341a98: '<unknown (@0x9341a98)>'
+# 22   0x092fde68: '<unknown (@0x92fde68)>'
+# 23   0x092fe175: '<unknown (@0x92fe175)>'
+# 24   0x090ec6c0: '<unknown (@0x90ec6c0)>'
+# 25   0x0879fb79: '<unknown (@0x879fb79)>'
+# 26   0x0863aebb: '<unknown (@0x863aebb)>'
+# End of Stack Trace
+
+
+# Current time Mon May 27 15:03:36 2024
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = "linuxaloem"
+# Signature = fa4d3e95ccc4dcaa70644b276588aa2d
+# 0    0x086c719a: '<unknown (@0x86c719a)>'
+# 1    0x083ea8b6: '<unknown (@0x83ea8b6)>'
+# 2    0x083fcd4c: '<unknown (@0x83fcd4c)>'
+# 3    0x083aba39: '<unknown (@0x83aba39)>'
+# 4    0xf68a2569: '/home/quinn/osu/ece271/riscv-cpu/tests/register/register_testbench.sv:67'
+# 5    0x08dcf9a5: '<unknown (@0x8dcf9a5)>'
+# 6    0x08131d92: '<unknown (@0x8131d92)>'
+# 7    0x082b8656: '<unknown (@0x82b8656)>'
+# 8    0x087d108a: '<unknown (@0x87d108a)>'
+# 9    0x087d648c: '<unknown (@0x87d648c)>'
+# 10   0x087d80a7: '<unknown (@0x87d80a7)>'
+# 11   0x08a9a3b9: '<unknown (@0x8a9a3b9)>'
+# 12   0x092365cb: '<unknown (@0x92365cb)>'
+# 13   0x09235bba: '<unknown (@0x9235bba)>'
+# 14   0x0923b143: '<unknown (@0x923b143)>'
+# 15   0x0923b25a: '<unknown (@0x923b25a)>'
+# 16   0x0923c901: '<unknown (@0x923c901)>'
+# 17   0x0923cc76: '<unknown (@0x923cc76)>'
+# 18   0x08d20173: '<unknown (@0x8d20173)>'
+# 19   0x092e4977: '<unknown (@0x92e4977)>'
+# 20   0x0933ec3c: '<unknown (@0x933ec3c)>'
+# 21   0x09341a98: '<unknown (@0x9341a98)>'
+# 22   0x092fde68: '<unknown (@0x92fde68)>'
+# 23   0x092fe175: '<unknown (@0x92fe175)>'
+# 24   0x090ec6c0: '<unknown (@0x90ec6c0)>'
+# 25   0x0879fb79: '<unknown (@0x879fb79)>'
+# 26   0x0863aebb: '<unknown (@0x863aebb)>'
+# End of Stack Trace
+
+
+# Current time Mon May 27 15:04:37 2024
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = "linuxaloem"
+# Signature = fa4d3e95ccc4dcaa70644b276588aa2d
+# 0    0x086c719a: '<unknown (@0x86c719a)>'
+# 1    0x083ea8b6: '<unknown (@0x83ea8b6)>'
+# 2    0x083fcd4c: '<unknown (@0x83fcd4c)>'
+# 3    0x083aba39: '<unknown (@0x83aba39)>'
+# 4    0xf68a2569: '/home/quinn/osu/ece271/riscv-cpu/tests/register/register_testbench.sv:67'
+# 5    0x08dcf9a5: '<unknown (@0x8dcf9a5)>'
+# 6    0x08131d92: '<unknown (@0x8131d92)>'
+# 7    0x082b8656: '<unknown (@0x82b8656)>'
+# 8    0x087d108a: '<unknown (@0x87d108a)>'
+# 9    0x087d648c: '<unknown (@0x87d648c)>'
+# 10   0x087d80a7: '<unknown (@0x87d80a7)>'
+# 11   0x08a9a3b9: '<unknown (@0x8a9a3b9)>'
+# 12   0x092365cb: '<unknown (@0x92365cb)>'
+# 13   0x09235bba: '<unknown (@0x9235bba)>'
+# 14   0x0923b143: '<unknown (@0x923b143)>'
+# 15   0x0923b25a: '<unknown (@0x923b25a)>'
+# 16   0x0923c901: '<unknown (@0x923c901)>'
+# 17   0x0923cc76: '<unknown (@0x923cc76)>'
+# 18   0x08d20173: '<unknown (@0x8d20173)>'
+# 19   0x092e4977: '<unknown (@0x92e4977)>'
+# 20   0x0933ec3c: '<unknown (@0x933ec3c)>'
+# 21   0x09341a98: '<unknown (@0x9341a98)>'
+# 22   0x092fde68: '<unknown (@0x92fde68)>'
+# 23   0x092fe175: '<unknown (@0x92fe175)>'
+# 24   0x090ec6c0: '<unknown (@0x90ec6c0)>'
+# 25   0x0879fb79: '<unknown (@0x879fb79)>'
+# 26   0x0863aebb: '<unknown (@0x863aebb)>'
+# End of Stack Trace
+
+
