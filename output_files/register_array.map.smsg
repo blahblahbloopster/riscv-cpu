@@ -1,0 +1,2 @@
+Warning (10273): Verilog HDL warning at register.sv(24): extended using "x" or "z" File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 24
+Warning (10273): Verilog HDL warning at register.sv(25): extended using "x" or "z" File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 25

@@ -1,0 +1,786 @@
+Analysis & Synthesis report for register_array
+Wed May 29 15:27:11 2024
+Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Port Connectivity Checks: "register:R31"
+ 11. Port Connectivity Checks: "register:R30"
+ 12. Port Connectivity Checks: "register:R29"
+ 13. Port Connectivity Checks: "register:R28"
+ 14. Port Connectivity Checks: "register:R27"
+ 15. Port Connectivity Checks: "register:R26"
+ 16. Port Connectivity Checks: "register:R25"
+ 17. Port Connectivity Checks: "register:R24"
+ 18. Port Connectivity Checks: "register:R23"
+ 19. Port Connectivity Checks: "register:R22"
+ 20. Port Connectivity Checks: "register:R21"
+ 21. Port Connectivity Checks: "register:R20"
+ 22. Port Connectivity Checks: "register:R19"
+ 23. Port Connectivity Checks: "register:R18"
+ 24. Port Connectivity Checks: "register:R17"
+ 25. Port Connectivity Checks: "register:R16"
+ 26. Port Connectivity Checks: "register:R15"
+ 27. Port Connectivity Checks: "register:R14"
+ 28. Port Connectivity Checks: "register:R13"
+ 29. Port Connectivity Checks: "register:R12"
+ 30. Port Connectivity Checks: "register:R11"
+ 31. Port Connectivity Checks: "register:R10"
+ 32. Port Connectivity Checks: "register:R9"
+ 33. Port Connectivity Checks: "register:R8"
+ 34. Port Connectivity Checks: "register:R7"
+ 35. Port Connectivity Checks: "register:R6"
+ 36. Port Connectivity Checks: "register:R5"
+ 37. Port Connectivity Checks: "register:R4"
+ 38. Port Connectivity Checks: "register:R3"
+ 39. Port Connectivity Checks: "register:R2"
+ 40. Port Connectivity Checks: "register:R1"
+ 41. Port Connectivity Checks: "register:R0"
+ 42. Post-Synthesis Netlist Statistics for Top Partition
+ 43. Elapsed Time Per Partition
+ 44. Analysis & Synthesis Messages
+ 45. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2023  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                        ;
++------------------------------------+------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Wed May 29 15:27:11 2024          ;
+; Quartus Prime Version              ; 23.1std.0 Build 991 11/28/2023 SC Lite Edition ;
+; Revision Name                      ; register_array                                 ;
+; Top-level Entity Name              ; register_array                                 ;
+; Family                             ; MAX 10                                         ;
+; Total logic elements               ; 0                                              ;
+;     Total combinational functions  ; 0                                              ;
+;     Dedicated logic registers      ; 0                                              ;
+; Total registers                    ; 0                                              ;
+; Total pins                         ; 113                                            ;
+; Total virtual pins                 ; 0                                              ;
+; Total memory bits                  ; 0                                              ;
+; Embedded Multiplier 9-bit elements ; 0                                              ;
+; Total PLLs                         ; 0                                              ;
+; UFM blocks                         ; 0                                              ;
+; ADC blocks                         ; 0                                              ;
++------------------------------------+------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; 10M50DAF484C7G     ;                    ;
+; Top-level entity name                                            ; register_array     ; register_array     ;
+; Family name                                                      ; MAX 10             ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
++----------------------------+-------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                           ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                       ; Library ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------+---------+
+; register_array.sv                ; yes             ; User SystemVerilog HDL File  ; /home/quinn/osu/ece271/riscv-cpu/register_array.sv ;         ;
+; register.sv                      ; yes             ; User SystemVerilog HDL File  ; /home/quinn/osu/ece271/riscv-cpu/register.sv       ;         ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------+---------+
+
+
++---------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                   ;
++---------------------------------------------+-----------------+
+; Resource                                    ; Usage           ;
++---------------------------------------------+-----------------+
+;                                             ;                 ;
+; Total combinational functions               ; 0               ;
+; Logic element usage by number of LUT inputs ;                 ;
+;     -- 4 input functions                    ; 0               ;
+;     -- 3 input functions                    ; 0               ;
+;     -- <=2 input functions                  ; 0               ;
+;                                             ;                 ;
+; Logic elements by mode                      ;                 ;
+;     -- normal mode                          ; 0               ;
+;     -- arithmetic mode                      ; 0               ;
+;                                             ;                 ;
+; Total registers                             ; 0               ;
+;     -- Dedicated logic registers            ; 0               ;
+;     -- I/O registers                        ; 0               ;
+;                                             ;                 ;
+; I/O pins                                    ; 113             ;
+;                                             ;                 ;
+; Embedded Multiplier 9-bit elements          ; 0               ;
+;                                             ;                 ;
+; Maximum fan-out node                        ; b_bus[0]~output ;
+; Maximum fan-out                             ; 1               ;
+; Total fan-out                               ; 113             ;
+; Average fan-out                             ; 0.50            ;
++---------------------------------------------+-----------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                   ;
++----------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------+----------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name ; Entity Name    ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------+----------------+--------------+
+; |register_array            ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 113  ; 0            ; 0          ; |register_array     ; register_array ; work         ;
++----------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------+----------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++-----------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                ;
++------------------------------------------+----------------------------------------+
+; Register name                            ; Reason for Removal                     ;
++------------------------------------------+----------------------------------------+
+; register:R31|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R30|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R29|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R28|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R27|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R26|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R25|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R24|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R23|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R22|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R21|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R20|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R19|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R18|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R17|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R16|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R15|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R14|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R13|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R12|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R11|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R10|value[0..31]                ; Stuck at GND due to stuck port data_in ;
+; register:R9|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R8|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R7|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R6|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R5|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R4|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R3|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R2|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R1|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; register:R0|value[0..31]                 ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 1024 ;                                        ;
++------------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 0     ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R31"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R30"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R29"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R28"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R27"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R26"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R25"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R24"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R23"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R22"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R21"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R20"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R19"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R18"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R17"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R16"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R15"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R14"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R13"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R12"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R11"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R10"                                                                                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R9"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R8"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R7"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R6"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R5"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R4"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R3"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R2"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R1"                                                                                                                                  ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                        ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+; data ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:R0"                                                                                                                                                                              ;
++--------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port         ; Type  ; Severity ; Details                                                                                                                                                                            ;
++--------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; store        ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (1 bits) it drives.  The 31 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; store[-1]    ; Input ; Info     ; Stuck at GND                                                                                                                                                                       ;
+; enable_a     ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (1 bits) it drives.  The 31 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; enable_a[-1] ; Input ; Info     ; Stuck at VCC                                                                                                                                                                       ;
+; data         ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..1]" will be connected to GND.                                     ;
++--------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 113                         ;
+; cycloneiii_io_obuf    ; 32                          ;
+; cycloneiii_lcell_comb ; 1                           ;
+;     normal            ; 1                           ;
+;         0 data inputs ; 1                           ;
+;                       ;                             ;
+; Max LUT depth         ; 0.00                        ;
+; Average LUT depth     ; 0.00                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
+    Info: Processing started: Wed May 29 15:27:02 2024
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off register_array -c register_array
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file register_array.sv
+    Info (12023): Found entity 1: register_array File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file register.sv
+    Info (12023): Found entity 1: register File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file branch.sv
+    Info (12023): Found entity 1: branch File: /home/quinn/osu/ece271/riscv-cpu/branch.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file alu.sv
+    Info (12023): Found entity 1: alu File: /home/quinn/osu/ece271/riscv-cpu/alu.sv Line: 1
+Warning (10236): Verilog HDL Implicit Net warning at register_array.sv(27): created implicit net for "data" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 27
+Info (12127): Elaborating entity "register_array" for the top level hierarchy
+Info (12128): Elaborating entity "register" for hierarchy "register:R0" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 26
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "data" is missing source, defaulting to GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 27
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "data" is missing source, defaulting to GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 27
+Warning (12241): 32 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (13030): Reduced the following open-drain buffers that are fed by GND
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[0]" to the output pin "a_bus[0]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[1]" to the output pin "a_bus[1]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[2]" to the output pin "a_bus[2]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[3]" to the output pin "a_bus[3]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[4]" to the output pin "a_bus[4]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[5]" to the output pin "a_bus[5]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[6]" to the output pin "a_bus[6]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[7]" to the output pin "a_bus[7]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[8]" to the output pin "a_bus[8]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[9]" to the output pin "a_bus[9]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[10]" to the output pin "a_bus[10]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[11]" to the output pin "a_bus[11]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[12]" to the output pin "a_bus[12]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[13]" to the output pin "a_bus[13]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[14]" to the output pin "a_bus[14]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[15]" to the output pin "a_bus[15]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[16]" to the output pin "a_bus[16]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[17]" to the output pin "a_bus[17]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[18]" to the output pin "a_bus[18]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[19]" to the output pin "a_bus[19]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[20]" to the output pin "a_bus[20]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[21]" to the output pin "a_bus[21]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[22]" to the output pin "a_bus[22]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[23]" to the output pin "a_bus[23]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[24]" to the output pin "a_bus[24]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[25]" to the output pin "a_bus[25]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[26]" to the output pin "a_bus[26]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[27]" to the output pin "a_bus[27]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[28]" to the output pin "a_bus[28]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[29]" to the output pin "a_bus[29]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[30]" to the output pin "a_bus[30]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+    Warning (13031): Reduced fanout from the always-enabled open-drain buffer "register:R0|a_out[31]" to the output pin "a_bus[31]" to GND File: /home/quinn/osu/ece271/riscv-cpu/register.sv Line: 10
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "a_bus[0]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[1]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[2]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[3]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[4]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[5]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[6]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[7]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[8]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[9]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[10]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[11]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[12]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[13]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[14]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[15]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[16]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[17]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[18]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[19]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[20]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[21]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[22]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[23]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[24]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[25]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[26]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[27]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[28]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[29]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[30]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+    Warning (13410): Pin "a_bus[31]" is stuck at GND File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 8
+Info (286030): Timing-Driven Synthesis is running
+Info (144001): Generated suppressed messages file /home/quinn/osu/ece271/riscv-cpu/output_files/register_array.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 49 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "clk" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 2
+    Warning (15610): No output dependent on input pin "reset_n" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 3
+    Warning (15610): No output dependent on input pin "select[0]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 4
+    Warning (15610): No output dependent on input pin "select[1]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 4
+    Warning (15610): No output dependent on input pin "select[2]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 4
+    Warning (15610): No output dependent on input pin "select[3]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 4
+    Warning (15610): No output dependent on input pin "select[4]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 4
+    Warning (15610): No output dependent on input pin "enable_b[0]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 6
+    Warning (15610): No output dependent on input pin "enable_b[1]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 6
+    Warning (15610): No output dependent on input pin "enable_b[2]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 6
+    Warning (15610): No output dependent on input pin "enable_b[3]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 6
+    Warning (15610): No output dependent on input pin "enable_b[4]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 6
+    Warning (15610): No output dependent on input pin "store_data[0]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[1]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[2]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[3]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[4]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[5]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[6]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[7]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[8]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[9]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[10]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[11]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[12]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[13]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[14]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[15]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[16]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[17]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[18]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[19]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[20]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[21]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[22]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[23]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[24]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[25]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[26]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[27]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[28]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[29]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[30]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "store_data[31]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 7
+    Warning (15610): No output dependent on input pin "enable_a[4]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 5
+    Warning (15610): No output dependent on input pin "enable_a[0]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 5
+    Warning (15610): No output dependent on input pin "enable_a[1]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 5
+    Warning (15610): No output dependent on input pin "enable_a[2]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 5
+    Warning (15610): No output dependent on input pin "enable_a[3]" File: /home/quinn/osu/ece271/riscv-cpu/register_array.sv Line: 5
+Info (21057): Implemented 113 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 49 input pins
+    Info (21059): Implemented 64 output pins
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 123 warnings
+    Info: Peak virtual memory: 393 megabytes
+    Info: Processing ended: Wed May 29 15:27:11 2024
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:19
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in /home/quinn/osu/ece271/riscv-cpu/output_files/register_array.map.smsg.
+
+
