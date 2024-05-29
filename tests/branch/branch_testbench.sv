@@ -5,7 +5,7 @@
 
 module alu_testbench();
 
-    logic clk,
+    logic clk;
     logic [31:0] register_source_1;
     logic [31:0] register_source_2;
     logic [31:0] program_counter;
@@ -43,7 +43,7 @@ module alu_testbench();
     end
 
     always @(negedge clk) begin
-        if (out !== out_expected) begin
+        if (new_program_counter !== new_program_counter_expected) begin
             $display("Compare error:");
             $display("reg1 = %b", register_source_1);
             $display("reg2 = %b", register_source_2);
