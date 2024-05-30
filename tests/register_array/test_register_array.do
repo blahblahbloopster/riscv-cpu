@@ -8,8 +8,6 @@ add wave sim:/register_array_testbench/register_array_output
 add wave sim:/register_array_testbench/dut/store_decoded
 add wave sim:/register_array_testbench/dut/enable_a_decoded
 add wave sim:/register_array_testbench/dut/enable_b_decoded
-add wave sim:/register_array_testbench/dut/R1/value
-# add wave sim:/register_array_testbench/dut/R2/value
 radix signal sim:/register_array_testbench/current_vector hexadecimal
 radix signal sim:/register_array_testbench/current_vector.reset_n hexadecimal
 radix signal sim:/register_array_testbench/current_vector.store hexadecimal
