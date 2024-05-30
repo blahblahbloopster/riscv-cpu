@@ -51,13 +51,14 @@ struct TestOp {
 impl TestOp {
     fn gen_test(&self) -> String {
         format!(
-            "{:x}_{:02x}_{:08x}__{:02x}_{:08x}__{:02x}_{:08x}\n",
+            // rst, store, en, en, store, a, b
+            "{:x} {:02x} {:02x} {:02x} {:08x} {:08x} {:08x}\n",
             if self.reset_n { 1 } else { 0 },
             self.store.0,
-            self.store.1,
             self.assert[0].addr,
-            self.assert[0].value,
             self.assert[1].addr,
+            self.store.1,
+            self.assert[0].value,
             self.assert[1].value
         )
     }
@@ -117,7 +118,7 @@ fn gen_single_reg_tests() {
 
         // reset, store enable, load a, load b, store value, a, b
         println!(
-            "{}__{}__{}_{}__{}__{}_{}",
+            "{} {} {} {} {} {} {}",
             rst_n.stringify(),
             store.stringify(),
             load_a.stringify(),
@@ -130,27 +131,25 @@ fn gen_single_reg_tests() {
 }
 
 fn main() {
-    gen_single_reg_tests();
-    return;
+    //gen_single_reg_tests();
+    //return;
     let mut regs = Registers::new();
 
     let mut rng = StdRng::seed_from_u64(1234567890123);
-    let mut of = File::create("register_tests.tv").unwrap();
+    let mut of = File::create("register_array_tests.tv").unwrap();
     for _ in 0..500 {
         let store_addr = rng.gen_range(0..=31);
         let value = rng.gen();
 
         let reset = rng.gen_ratio(1, 100);
 
-        if reset {
-            regs.reset();
-        }
-
         let a0 = regs.gen_assert(&mut rng);
         let a1 = regs.gen_assert(&mut rng);
 
-        if !reset {
-            regs.set(store_addr, value);
+        regs.set(store_addr, value);
+
+        if reset {
+            regs.reset();
         }
 
         let op = TestOp {
