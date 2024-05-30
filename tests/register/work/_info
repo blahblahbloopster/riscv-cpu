@@ -11,24 +11,24 @@ cModel Technology
 d/home/quinn/osu/ece272/lab_6
 vregister
 Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z1 !s110 1717019629
+Z1 !s110 1717028101
 !i10b 1
-!s100 A6W1=<4CW50az0XWJ]dmo3
+!s100 Zc[1l`loLBlJk63cjX4De0
 Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
-IC>_N@:]G_diV<?HA^Xh113
+I]Tm8@;H`Z7[]z=^W_WMGW3
 Z3 VDg1SIo80bB@j0V0VzS_@n1
 S1
 Z4 d/home/quinn/osu/ece271/riscv-cpu/tests/register
-w1717019477
+w1717028097
 8../../register.sv
 F../../register.sv
-!i122 127
+!i122 129
 L0 3 25
 Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1717019629.000000
+Z6 !s108 1717028101.000000
 !s107 register_testbench.sv|../../register.sv|
 Z7 !s90 -reportprogress|300|-work|work|-sv|-stats=none|../../register.sv|register_testbench.sv|
 !i113 1
@@ -38,17 +38,17 @@ vregister_testbench
 R0
 R1
 !i10b 1
-!s100 Pb^3h_;I:GBn;C9WU2hTP2
+!s100 DG^ak<<0893jP[J^]:5El0
 R2
-IS0iWZEIcj[YHIQZUB9ATH2
+I^GAUzCn`<[l4eX?R^M3Sz2
 R3
 S1
 R4
-w1717019625
+w1717021048
 8register_testbench.sv
 Fregister_testbench.sv
-!i122 127
-L0 11 125
+!i122 129
+L0 11 136
 R5
 r1
 !s85 0
