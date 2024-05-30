@@ -1,14 +1,14 @@
 `define XLEN 32
 
 module register (
-    input logic clk,
-    input logic reset_n,
-    input logic store,
-    input logic enable_a,
-    input logic enable_b,
-    input logic [`XLEN-1:0] data,
-    output logic [`XLEN-1:0] a_out,
-    output logic [`XLEN-1:0] b_out
+    input  logic             clk,
+    input  logic             reset_n,
+    input  logic             store,
+    input  logic             enable_a,
+    input  logic             enable_b,
+    input  logic [`XLEN-1:0] data,
+    output tri   [`XLEN-1:0] a_out,
+    output tri   [`XLEN-1:0] b_out
 );
 
     reg [`XLEN-1:0] value = 0;
