@@ -1,0 +1,36 @@
+# Loading project test_register_array
+do test_register_array.do
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# -- Compiling module register
+# -- Compiling module register_array
+# -- Compiling module register_array_testbench
+# 
+# Top level modules:
+# 	register_array_testbench
+# vsim -gui work.register_array_testbench 
+# Start time: 17:21:14 on May 29,2024
+# Loading sv_std.std
+# Loading work.register_array_testbench
+# Loading work.register_array
+# Loading work.register
+# .main_pane.wave.interior.cs.body.pw.wf
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# hexadecimal
+# unsigned
+# unsigned
+#         500 tests completed with           0 errors
+# ** Note: $stop    : register_array_testbench.sv(141)
+#    Time: 5005 ps  Iteration: 1  Instance: /register_array_testbench
+# Break in Module register_array_testbench at register_array_testbench.sv line 141
