@@ -34,3 +34,5 @@ do test_register_array.do
 # ** Note: $stop    : register_array_testbench.sv(141)
 #    Time: 5005 ps  Iteration: 1  Instance: /register_array_testbench
 # Break in Module register_array_testbench at register_array_testbench.sv line 141
+# End time: 17:14:26 on May 31,2024, Elapsed time: 47:53:12
+# Errors: 0, Warnings: 1
