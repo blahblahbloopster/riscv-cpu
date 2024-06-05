@@ -3,4 +3,5 @@ output_files/
 db/
 incremental_db/
 **/work
+**/transcript
 
