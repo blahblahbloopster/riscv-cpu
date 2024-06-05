@@ -3,12 +3,12 @@
  * Example 4.39 HDL Testbench with Test Vector File p 223
  */
 
-`define TEST_VECTOR_FILE "register_tests.tv"
+`define TEST_VECTOR_FILE "program_counter_tests.tv"
 `define VECTOR_SIZE 100
 `define XLEN 32
-`define VECTOR_DIMENSION 7
+`define VECTOR_DIMENSION 5
 
-module register_testbench();
+module program_counter_testbench();
 
     typedef struct packed {
         logic             reset_n;
@@ -26,22 +26,22 @@ module register_testbench();
     reg [8*8-1:0] address_expected_str;
 
     logic clk;
-    RegisterOutput pc_output;
+    ProgramCounterOutput pc_output;
     TestVector current_vector;
-    TestVector test_vectors [499:0];
+    TestVector test_vectors [99999:0];
     int vector_num;
     int num_errors;
     int num_vectors;
     int field_count;
 
-    // create instance of register to test
+    // create instance of program_counter to test
     program_counter dut(
         .clk(clk),
         .reset_n(current_vector.reset_n),
         .enable_n(current_vector.enable_n),
         .load_new_address(current_vector.load_new_address),
         .new_address(current_vector.new_address),
-        .address(pc_output.address),
+        .address(pc_output.address)
     );
 
     // define clock
@@ -97,12 +97,6 @@ module register_testbench();
         current_vector = test_vectors[vector_num];
     end
 
-    // load test vector shortly after each clock rising edge
-    always @(posedge clk) begin
-        #1;
-        current_vector = test_vectors[vector_num];
-    end
-
     // compare with outputs on clock falling edge
     always @(negedge clk) begin
         if (pc_output.address !== current_vector.address_expected) begin
@@ -123,6 +117,12 @@ module register_testbench();
         end
 
         vector_num = vector_num + 1;
+    end
+
+    // load test vector shortly before each clock rising edge
+    always @(negedge clk) begin
+        #4;
+        current_vector = test_vectors[vector_num];
     end
 
 endmodule
