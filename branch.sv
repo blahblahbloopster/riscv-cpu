@@ -15,17 +15,16 @@ module branch (
     input  logic [`XLEN-1:0]           register_data_1,
     input  logic [`XLEN-1:0]           register_data_2,
 
-    output logic [`XLEN-1:0] compare_data_1,
-    output logic [`XLEN-1:0] compare_data_2,
+    output logic [`XLEN-1:0] alu_a,
+    output logic [`XLEN-1:0] alu_b,
+    output logic [2:0]       alu_op,
     input  logic [`XLEN-1:0] alu_out,
 
-    output logic             load_new_program_counter;
-    output logic [`XLEN-1:0] new_program_counter,
+    output logic             load_new_program_counter,
+    output logic [`XLEN-1:0] new_program_counter
 );
 
-    logic compare_success;
-    logic jump;
-    logic [2:0] alu_op;
+    logic [12:1] offset;
 
     always @(posedge clk) begin
         if (!enable_n) begin
@@ -39,17 +38,21 @@ module branch (
 
     always_comb begin
         if (!enable_n) begin
-            compare_data_1 = register_data_1;
-            compare_data_2 = register_data_2;
+            alu_a = register_data_1;
+            alu_b = register_data_2;
 
             // uhh black magic fuckery, hope i dont have to debug this
             alu_op = {~instruction[14], instruction[14], instruction[13]};
             load_new_program_counter = |alu_out ^ instruction[12];
 
+            offset = {instruction[31], instruction[7], instruction[30:25],
+                      instruction[11:8]};
+            new_program_counter = program_counter + offset;
         end else begin
-            compare_data_1 = `BUS_HI_Z;
-            compare_data_2 = `BUS_HI_Z;
+            alu_a = `BUS_HI_Z;
+            alu_b = `BUS_HI_Z;
             load_new_program_counter = 1'bz;
+            new_program_counter = `BUS_HI_Z;
         end
     end
 
