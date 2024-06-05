@@ -3,17 +3,22 @@
 !*.*
 !*/
 
-# Simulation files
+# Quartus Files
 *.bak
+*.qsf
 output_files/
 db/
 incremental_db/
+
+# Simulation files
 **/work
 **/transcript
+/simulation/
 vsim.wlf
 *.mti
 *.mpf
 
 # Vim activities
+# Add `set noswapfile` to ~/.vimrc
 *.swp
 
