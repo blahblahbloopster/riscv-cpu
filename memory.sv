@@ -53,7 +53,7 @@ module memory(
     logic [15:0] main_addr, addr;
     logic [7:0] main_wdata, main_rdata;
     logic main_rden, main_wren;
-    logic [`XLEN-1:0] wdata;
+    logic [`XLEN-1:0] wdata, read_data;
 
     main_memory main_memory(main_addr, clk, main_wdata, main_rden, main_wren, main_rden);
 
@@ -72,21 +72,21 @@ module memory(
                     main_rden = 1;
                     case (width)
                         BYTE: begin
-                            state <= REDADING_0;
+                            state <= READING_0;
                             main_rden = 1;
                             addr = address_main - `DATA_START;
                             main_addr = address_main - `DATA_START;
                             busy_main = 1;
                         end
                         HALFWORD: begin
-                            state <= REDADING_1;
+                            state <= READING_1;
                             main_rden = 1;
                             addr = address_main - `DATA_START;
                             main_addr = address_main - `DATA_START + 1;
                             busy_main = 1;
                         end
                         WORD: begin
-                            state <= REDADING_3;
+                            state <= READING_3;
                             main_rden = 1;
                             addr = address_main - `DATA_START;
                             main_addr = address_main - `DATA_START + 3;
@@ -117,7 +117,7 @@ module memory(
                 end else begin
                     main_wren = 0;
                     main_rden = 0;
-                    main_busy = 0;
+                    busy_main = 0;
                 end
             end
             WRITING_0: begin
