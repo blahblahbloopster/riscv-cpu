@@ -1,9 +1,12 @@
 `define XLEN 32
 `define SELECT_LEN 5
+`define HI_Z `XLEN'hzzzzzzzz
+`define ZERO `XLEN'h00000000
 
 module register_array (
     input  logic                   clk,
     input  logic                   reset_n,
+    input  logic                   enable_n,
     input  logic [`SELECT_LEN-1:0] store,
     input  logic [`SELECT_LEN-1:0] enable_a,
     input  logic [`SELECT_LEN-1:0] enable_b,
@@ -20,11 +23,11 @@ module register_array (
     tri [`XLEN-1:0] b_internal;
 
     always_comb begin
-        store_decoded = `XLEN'b1 << store;
-        enable_a_decoded = `XLEN'b1 << enable_a;
-        enable_b_decoded = `XLEN'b1 << enable_b;
-        a_bus = a_internal;
-        b_bus = b_internal;
+        store_decoded = !enable_n ? `XLEN'b1 << store : `ZERO;
+        enable_a_decoded = !enable_n ? `XLEN'b1 << enable_a : `ZERO;
+        enable_b_decoded = !enable_n ? `XLEN'b1 << enable_b : `ZERO;
+        a_bus = !enable_n ? a_internal : `HI_Z;
+        b_bus = !enable_n ? b_internal : `HI_Z;
     end
 
     register R0(clk, reset_n, 1'b1, enable_a_decoded[0], enable_b_decoded[0], `XLEN'b0, a_internal, b_internal);
