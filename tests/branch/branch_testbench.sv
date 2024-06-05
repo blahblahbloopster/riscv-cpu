@@ -44,7 +44,7 @@ module program_counter_testbench();
         reg [8*3-1:0] alu_op;
         reg [8*1-1:0] load_new_pc;
         reg [8*8-1:0] new_pc;
-    } OutputSrtings;
+    } OutputStrings;
 
     int vector_file;
     OutputStrings output_strings;
