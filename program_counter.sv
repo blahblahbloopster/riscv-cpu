@@ -1,6 +1,6 @@
 `define XLEN 32
-`define CODE_START `XLEN'h8000
-`define PC_STEP    `XLEN'h0004
+`define CODE_START `XLEN'h80000000
+`define PC_STEP    `XLEN'h00000004
 
 module program_counter (
     input  logic             clk,
@@ -10,10 +10,10 @@ module program_counter (
     input  logic             load_new_address,
     input  logic [`XLEN-1:0] new_address,
 
-    output logic [`XLEN-1:0] address,
+    output logic [`XLEN-1:0] address
 );
 
-    reg [`XLEN-1:0] value = 0;
+    reg [`XLEN-1:0] value = `CODE_START;
 
     always @(posedge clk) begin
         if (!enable_n) begin
@@ -24,13 +24,10 @@ module program_counter (
             end else begin
                 value <= value + `PC_STEP;
             end
-
-        end else begin
-            value <= `XLEN'hzzzzzzzz;
         end
     end
 
-    assign address = value;
+    assign address = enable_n ? `XLEN'hzzzzzzzz : value;
 
 endmodule
 
