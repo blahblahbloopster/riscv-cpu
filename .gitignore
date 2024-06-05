@@ -1,7 +1,19 @@
+# Files without extension
+*
+!*.*
+!*/
+
+# Simulation files
 *.bak
 output_files/
 db/
 incremental_db/
 **/work
 **/transcript
+vsim.wlf
+*.mti
+*.mpf
+
+# Vim activities
+*.swp
 
