@@ -2,6 +2,7 @@
 *
 !*.*
 !*/
+!Makefile
 
 # Quartus Files
 *.bak
