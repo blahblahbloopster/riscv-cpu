@@ -14,8 +14,8 @@ module alu (
     logic [4:0] shift;
      
     always_comb begin
-        shift = !enable_n ? b[4:0] : 5'bzzzzz;
         if (!enable_n) begin
+            shift = b[4:0];
             case(opcode)
                 0: result = a + (signal ? -b : b);
                 1: result = a << shift;
@@ -28,6 +28,7 @@ module alu (
                 7: result = a & b;
             endcase
         end else begin
+            shift = 5'bzzzzz;
             result = `XLEN'hzzzzzzzz;
         end
     end
