@@ -24,7 +24,7 @@ module alu_imm (
 
     always @(posedge clk) begin
         if (!enable_n) begin
-            register_1 <= instruction[12:8];
+            register_1 <= instruction[19:15];
         end else begin
             register_1 <= `SELECT_HI_Z;
         end
@@ -35,10 +35,10 @@ module alu_imm (
 
             alu_a = register_data_1;
             alu_b = {5'h00000, instruction[31:20]};
-            alu_op = instruction[15:13];
+            alu_op = instruction[14:12];
             alu_sig = instruction[30];
 
-            output_register = instruction[12:8];
+            output_register = instruction[11:7];
             output_register_data = alu_out;
         end else begin
             alu_a = `BUS_HI_Z;
