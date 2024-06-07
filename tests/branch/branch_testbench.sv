@@ -4,13 +4,13 @@
  */
 
 `define TEST_VECTOR_FILE "branch_tests.tv"
-`define NUM_TESTS 500
+`define NUM_TESTS 10000
 `define VECTOR_SIZE 271
 `define VECTOR_DIMENSION 13
 `define XLEN 32
 `define REG_SELECT_LEN 5
 
-module program_counter_testbench();
+module branch_testbench();
 
     typedef struct packed {
         logic enable_n;
@@ -50,7 +50,7 @@ module program_counter_testbench();
     OutputStrings output_strings;
 
     logic clk;
-    BranchOutput branch_output;
+    Outputs branch_outputs;
     TestVector current_vector;
     TestVector test_vectors [`NUM_TESTS-1:0];
     int vector_num;
@@ -61,12 +61,19 @@ module program_counter_testbench();
     // create instance of program_counter to test
     branch dut(
         .clk(clk),
-        .enable_n(current_vector.enable_n),
-        .instruction(current_vector.instruction),
-        .program_counter(current_vector.program_counter),
-        .register_data_1(current_vector.register_data_1),
-        .register_data_2(current_vector.register_data_2),
-        .alu_out(current_vector.alu_out)
+        .enable_n(current_vector.inputs.enable_n),
+        .instruction(current_vector.inputs.instruction),
+        .program_counter(current_vector.inputs.program_counter),
+        .register_1(branch_outputs.register_1),
+        .register_2(branch_outputs.register_2),
+        .register_data_1(current_vector.inputs.register_data_1),
+        .register_data_2(current_vector.inputs.register_data_2),
+        .alu_a(branch_outputs.alu_a),
+        .alu_b(branch_outputs.alu_b),
+        .alu_op(branch_outputs.alu_op),
+        .alu_out(current_vector.inputs.alu_out),
+        .load_new_program_counter(branch_outputs.load_new_pc),
+        .new_program_counter(branch_outputs.new_pc)
     );
 
     // define clock
@@ -118,15 +125,15 @@ module program_counter_testbench();
             end
 
             // check for high impedance outputs
-            case (output_strings.reg_1)
+            case (output_strings.register_1)
                 "zzzzzzzz": test_vectors[vector_num].expected.register_1 = `XLEN'hz;
-                default: field_count = $sscanf(output_strings.reg_1, "%h",
+                default: field_count = $sscanf(output_strings.register_1, "%h",
                         test_vectors[vector_num].expected.register_1);
             endcase
 
-            case (output_strings.reg_2)
+            case (output_strings.register_2)
                 "zzzzzzzz": test_vectors[vector_num].expected.register_2 = `XLEN'hz;
-                default: field_count = $sscanf(output_strings.reg_2, "%h",
+                default: field_count = $sscanf(output_strings.register_2, "%h",
                         test_vectors[vector_num].expected.register_2);
             endcase
 
@@ -155,7 +162,7 @@ module program_counter_testbench();
             endcase
 
             case (output_strings.new_pc)
-                "zzzzzzzz": test_vectors[vector_num].expected.new_pc = 1'hz;
+                "zzzzzzzz": test_vectors[vector_num].expected.new_pc = `XLEN'hz;
                 default: field_count = $sscanf(output_strings.new_pc, "%h",
                         test_vectors[vector_num].expected.new_pc);
             endcase
@@ -173,47 +180,47 @@ module program_counter_testbench();
 
     // compare with outputs on clock falling edge
     always @(negedge clk) begin
-        if (branch_output !== current_vector.expected) begin
+        if (branch_outputs !== current_vector.expected) begin
             $display("Compare error at vector #%d:", vector_num);
-            $display("       enable_n = %h", current_vector.enable_n);
-            $display("    instruction = %h", current_vector.instruction);
-            $display("program_counter = %h", current_vector.program_counter);
-            $display("register_data_1 = %h", current_vector.register_data_1);
-            $display("register_data_2 = %h", current_vector.register_data_2);
-            $display("        alu_out = %h", current_vector.alu_out);
+            $display("       enable_n = %h", current_vector.inputs.enable_n);
+            $display("    instruction = %h", current_vector.inputs.instruction);
+            $display("program_counter = %h", current_vector.inputs.program_counter);
+            $display("register_data_1 = %h", current_vector.inputs.register_data_1);
+            $display("register_data_2 = %h", current_vector.inputs.register_data_2);
+            $display("        alu_out = %h", current_vector.inputs.alu_out);
             $display("");
-            $display("     register_1 = %h (%8h expected)",
-                     branch_output.register_1,
+            $display("     register_1 = %h (%2h expected)",
+                     branch_outputs.register_1,
                      current_vector.expected.register_1);
-            $display("     register_2 = %h (%8h expected)",
-                     branch_output.register_2,
+            $display("     register_2 = %h (%2h expected)",
+                     branch_outputs.register_2,
                      current_vector.expected.register_2);
-            $display("          alu_a = %h (%8h expected)",
-                     branch_output.alu_a,
+            $display("          alu_a = %h (%1h expected)",
+                     branch_outputs.alu_a,
                      current_vector.expected.alu_a);
             $display("          alu_b = %h (%8h expected)",
-                     branch_output.alu_b,
+                     branch_outputs.alu_b,
                      current_vector.expected.alu_b);
             $display("         alu_op = %h (%1h expected)",
-                     branch_output.alu_op,
-                     current_vector.expectedd.alu_op);
+                     branch_outputs.alu_op,
+                     current_vector.expected.alu_op);
             $display("    load_new_pc = %h (%1h expected)",
-                     branch_output.load_new_pc,
+                     branch_outputs.load_new_pc,
                      current_vector.expected.load_new_pc);
             $display("         new_pc = %h (%8h expected)",
-                     branch_output.new_pc,
+                     branch_outputs.new_pc,
                      current_vector.expected.new_pc);
             $display("");
             num_errors = num_errors + 1;
         end
+
+        vector_num = vector_num + 1;
 
         // halt once all vectors are processed
         if (vector_num >= num_vectors) begin
             $display("%d tests completed with %d errors", vector_num, num_errors);
             $stop;
         end
-
-        vector_num = vector_num + 1;
     end
 
     // load test vector shortly before each clock rising edge

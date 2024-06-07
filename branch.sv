@@ -4,16 +4,16 @@
 `define SELECT_HI_Z `REG_SELECT_LEN'bzzzzz
 
 module branch (
-    input  logic             clk,
-    input  logic             enable_n,
+    input  logic clk,
+    input  logic enable_n,
 
     input  logic [`XLEN-1:0] instruction,
     input  logic [`XLEN-1:0] program_counter,
 
     output logic [`REG_SELECT_LEN-1:0] register_1,
     output logic [`REG_SELECT_LEN-1:0] register_2,
-    input  logic [`XLEN-1:0]           register_data_1,
-    input  logic [`XLEN-1:0]           register_data_2,
+    input  logic [`XLEN-1:0] register_data_1,
+    input  logic [`XLEN-1:0] register_data_2,
 
     output logic [`XLEN-1:0] alu_a,
     output logic [`XLEN-1:0] alu_b,
@@ -24,15 +24,15 @@ module branch (
     output logic [`XLEN-1:0] new_program_counter
 );
 
-    logic [12:1] offset;
+    logic [12:0] offset;
 
     always @(posedge clk) begin
         if (!enable_n) begin
-            register_1 <= instruction[12:8];
-            register_2 <= instruction[17:13];
+            register_1 <= instruction[19:15];
+            register_2 <= instruction[24:20];
         end else begin
-            register_1 <= `HI_Z;
-            register_2 <= `HI_Z;
+            register_1 <= `BUS_HI_Z;
+            register_2 <= `BUS_HI_Z;
         end
     end
 
@@ -41,7 +41,6 @@ module branch (
             alu_a = register_data_1;
             alu_b = register_data_2;
 
-            // uhh black magic fuckery, hope i dont have to debug this
             alu_op = {~instruction[14], instruction[14], instruction[13]};
             load_new_program_counter = |alu_out ^ instruction[12];
 
@@ -51,6 +50,7 @@ module branch (
         end else begin
             alu_a = `BUS_HI_Z;
             alu_b = `BUS_HI_Z;
+            alu_op = `BUS_HI_Z;
             load_new_program_counter = 1'bz;
             new_program_counter = `BUS_HI_Z;
         end
