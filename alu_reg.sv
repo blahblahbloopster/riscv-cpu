@@ -26,8 +26,8 @@ module alu_reg (
 
     always @(posedge clk) begin
         if (!enable_n) begin
-            register_1 <= instruction[12:8];
-            register_2 <= instruction[17:13];
+            register_1 <= instruction[19:15];
+            register_2 <= instruction[24:20];
         end else begin
             register_1 <= `SELECT_HI_Z;
             register_2 <= `SELECT_HI_Z;
@@ -38,10 +38,10 @@ module alu_reg (
         if (!enable_n) begin
             alu_a = register_data_1;
             alu_b = register_data_2;
-
-            alu_op = instruction[15:13];
+            alu_op = instruction[14:12];
             alu_sig = instruction[30];
-            output_register = instruction[12:8];
+
+            output_register = instruction[11:7];
             output_register_data = alu_out;
         end else begin
             alu_a = `BUS_HI_Z;
