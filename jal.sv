@@ -23,12 +23,10 @@ module jal (
     output logic [`XLEN-1:0] output_register_data
 );
 
-    logic [12:0] offset;
-
     always_comb begin
         if (!enable_n) begin
             alu_a = program_counter;
-            alu_b = $signed({instruction[31], instruction[19:12], instruction[20], instruction[30:21]});
+            alu_b = $signed({instruction[31], instruction[19:12], instruction[20], instruction[30:21], 1'b0});
 
             alu_op = 3'b000;
             alu_signal = 1'b0;
