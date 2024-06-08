@@ -36,6 +36,22 @@ module cpu (
     tri logic [`XLEN-1:0]           reg_array_a_bus;
     tri logic [`XLEN-1:0]           reg_array_b_bus;
 
+    memory memory (
+        .clk(clk),
+        .address_main(address_main),
+        .width(width_main),
+        .read_request_main(read_request_main),
+        .write_request_main(write_request_main),
+        .write_data_main(write_data_main),
+
+        .address_fetch(address_fetch),
+        .fetch_request(fetch_request),
+
+        .data_main(data_main),
+        .busy_main(busy_main),
+        .data_fetch(data_fetch)
+    );
+
     alu alu (
         .enable_n(alu_enable_n),
         .opcode(alu_opcode),
@@ -43,20 +59,6 @@ module cpu (
         .a(alu_a),
         .b(alu_b),
         .result(alu_result),
-    );
-
-    branch branch (
-        .clk(clk),
-        .enable_n(branch_enable_n),
-        .instruction(instruction),
-        .program_counter(program_counter),
-        .register_1(branch_register_1),
-        .register_2(branch_register_2),
-        .register_data_1(branch_register_data_1),
-        .register_data_2(branch_register_data_2),
-        .compare_data_1(branch_compare_data_1),
-        .compare_data_2(branch_compare_data_2),
-        .compare_result(branch_compare_result),
     );
 
     program_counter program_counter (
@@ -79,5 +81,55 @@ module cpu (
         .b_bus(reg_array_b_bus),
     );
 
+    // opcode modules
+    branch branch (
+        .clk(clk),
+        .enable_n(branch_enable_n),
+        .instruction(instruction),
+        .program_counter(program_counter),
+        .register_1(reg_array_enable_a),
+        .register_2(reg_array_enable_b),
+        .register_data_1(reg_array_a_bus),
+        .register_data_2(reg_array_b_bus),
+        .compare_data_1(branch_compare_data_1),
+        .compare_data_2(branch_compare_data_2),
+        .compare_result(branch_compare_result),
+    );
+
+    load load(
+        .clk(clk),
+        .enable_n(load_enable_n),
+        .register_1(reg_array_enable_a),
+        .register_2(reg_array_enable_b),
+        .register_data_1(reg_array_a_bus),
+        .register_data_2(reg_array_b_bus),
+        .instruction(instruction),
+        .memory_busy(busy_main),
+        .register_store(reg_array_store),
+        .register_store_data(reg_array_store_value),
+        .memory_address(address_main),
+        .memory_width(width_main),
+        .memory_read_request(read_request_main),
+        .memory_write_request(write_request_main),
+        .busy(load_busy),
+    );
+
+    store store(
+        .clk(clk),
+        .enable_n(store_enable_n),
+        .register_1(reg_array_enable_a),
+        .register_2(reg_array_enable_b),
+        .register_data_1(reg_array_a_bus),
+        .register_data_2(reg_array_b_bus),
+        .instruction(instruction),
+        .memory_busy(busy_main),
+        .register_store(reg_array_store),
+        .register_store_data(reg_array_store_value),
+        .memory_address(address_main),
+        .memory_width(width_main),
+        .memory_read_request(read_request_main),
+        .memory_write_request(write_request_main),
+        .busy(load_busy),
+    );
 endmodule
 
