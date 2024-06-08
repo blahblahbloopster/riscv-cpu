@@ -26,7 +26,7 @@ module auipc (
             alu_a = program_counter;
             alu_b = {instruction[31:12], 3'h000};
             alu_op = 3'b000;
-            alu_sig = 0'b0;
+            alu_sig = 1'b0;
 
             output_register = instruction[11:7];
             output_register_data = alu_out;
