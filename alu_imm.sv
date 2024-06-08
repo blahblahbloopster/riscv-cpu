@@ -9,17 +9,17 @@ module alu_imm (
 
     input  logic [`XLEN-1:0] instruction,
 
-    output logic [`REG_SELECT_LEN-1:0] register_1,
-    input  logic [`XLEN-1:0]           register_data_1,
+    output logic [`REG_SELECT_LEN-1:0] register_src,
+    input  logic [`XLEN-1:0]           register_src_data,
 
     output logic [`XLEN-1:0] alu_a,
     output logic [`XLEN-1:0] alu_b,
     output logic [2:0]       alu_op,
-    output logic             alu_sig;
+    output logic             alu_signal,
     input  logic [`XLEN-1:0] alu_out,
 
-    output logic [`REG_SELECT_LEN-1:0] output_register,
-    output logic [`XLEN-1:0] output_register_data
+    output logic [`REG_SELECT_LEN-1:0] register_dest,
+    output logic [`XLEN-1:0] register_dest_data
 );
 
     always @(posedge clk) begin
