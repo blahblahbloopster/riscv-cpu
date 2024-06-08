@@ -18,7 +18,6 @@ module branch (
     output logic [`XLEN-1:0] alu_a,
     output logic [`XLEN-1:0] alu_b,
     output logic [2:0]       alu_op,
-    output logic             alu_signal;
     input  logic [`XLEN-1:0] alu_out,
 
     output logic             load_new_program_counter,
@@ -43,7 +42,6 @@ module branch (
             alu_b = register_data_2;
 
             alu_op = {~instruction[14], instruction[14], instruction[13]};
-            alu_signal = 0'b0;
             load_new_program_counter = |alu_out ^ instruction[12];
 
             offset = {instruction[31], instruction[7], instruction[30:25],
@@ -53,7 +51,6 @@ module branch (
             alu_a = `BUS_HI_Z;
             alu_b = `BUS_HI_Z;
             alu_op = 3'bzzz;
-            alu_signal = 1'bz;
             load_new_program_counter = 1'bz;
             new_program_counter = `BUS_HI_Z;
         end
