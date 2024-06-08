@@ -6,35 +6,35 @@ module cpu (
     input logic reset_n,
 );
 
-    tri logic [`XLEN-1:0] instruction;
+    tri0 logic [`XLEN-1:0] instruction;
     
-    tri logic             alu_enable_n;
-    tri logic [2:0]       alu_opcode;
-    tri logic             alu_signal;
-    tri logic [`XLEN-1:0] alu_a;
-    tri logic [`XLEN-1:0] alu_b;
-    tri logic [`XLEN-1:0] alu_result;
+    tri0 logic             alu_enable_n;
+    tri0 logic [2:0]       alu_opcode;
+    tri0 logic             alu_signal;
+    tri0 logic [`XLEN-1:0] alu_a;
+    tri0 logic [`XLEN-1:0] alu_b;
+    tri0 logic [`XLEN-1:0] alu_result;
 
-    tri logic             branch_enable_n;
-    tri logic [`XLEN-1:0] branch_register_1;
-    tri logic [`XLEN-1:0] branch_register_2;
-    tri logic [`XLEN-1:0] branch_register_data_1;
-    tri logic [`XLEN-1:0] branch_register_data_2;
-    tri logic [`XLEN-1:0] branch_compare_data_1;
-    tri logic [`XLEN-1:0] branch_compare_data_2;
-    tri logic [`XLEN-1:0] branch_alu_out;
+    tri0 logic             branch_enable_n;
+    tri0 logic [`XLEN-1:0] branch_register_1;
+    tri0 logic [`XLEN-1:0] branch_register_2;
+    tri0 logic [`XLEN-1:0] branch_register_data_1;
+    tri0 logic [`XLEN-1:0] branch_register_data_2;
+    tri0 logic [`XLEN-1:0] branch_compare_data_1;
+    tri0 logic [`XLEN-1:0] branch_compare_data_2;
+    tri0 logic [`XLEN-1:0] branch_alu_out;
 
-    tri logic             pc_load;
-    tri logic [`XLEN-1:0] pc_new_address;
-    tri logic [`XLEN-1:0] pc_address;
+    tri0 logic             pc_load;
+    tri0 logic [`XLEN-1:0] pc_new_address;
+    tri0 logic [`XLEN-1:0] pc_address;
 
-    tri logic                       reg_array_enable_n;
-    tri logic [`REG_SELECT_LEN-1:0] reg_array_store;
-    tri logic [`REG_SELECT_LEN-1:0] reg_array_enable_a;
-    tri logic [`REG_SELECT_LEN-1:0] reg_array_enable_b;
-    tri logic [`XLEN-1:0]           reg_array_store_value;
-    tri logic [`XLEN-1:0]           reg_array_a_bus;
-    tri logic [`XLEN-1:0]           reg_array_b_bus;
+    tri0 logic                       reg_array_enable_n;
+    tri0 logic [`REG_SELECT_LEN-1:0] reg_array_store;
+    tri0 logic [`REG_SELECT_LEN-1:0] reg_array_enable_a;
+    tri0 logic [`REG_SELECT_LEN-1:0] reg_array_enable_b;
+    tri0 logic [`XLEN-1:0]           reg_array_store_value;
+    tri0 logic [`XLEN-1:0]           reg_array_a_bus;
+    tri0 logic [`XLEN-1:0]           reg_array_b_bus;
 
     memory memory (
         .clk(clk),
