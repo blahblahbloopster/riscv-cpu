@@ -19,7 +19,7 @@ pub fn generate_vectors<T: TestVector>(
             "Could not create file {}\n{}",
             vector_file_path,
             e,
-        )),
+        ).into()),
     };
 
     for _ in 0..num_vectors {
