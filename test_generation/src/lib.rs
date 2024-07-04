@@ -18,7 +18,7 @@ const ALU_REG_REG_FILE_NAME: &str = "alu_reg_reg.tv";
 const NUM_VECTORS: usize = 100;
 
 // Stolen from https://docs.rs/project-root/latest/project_root/fn.get_project_root.html
-pub fn get_project_root() -> io::Result<PathBuf> {
+fn get_project_root() -> io::Result<PathBuf> {
     let path = env::current_dir()?;
     let mut path_ancestors = path.as_path().ancestors();
 
