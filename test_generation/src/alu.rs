@@ -51,7 +51,7 @@ impl AluInputs {
     ) -> AluInputs {
         // only allow arithmetic shift on right shift funct
         if arithmetic_shift {
-            assert_eq!(funct3, AluFunct::SR.to_u8());
+            assert_eq!(funct3, AluFunct::SR.into());
         }
 
         AluInputs {
@@ -68,11 +68,11 @@ impl AluInputs {
     ///
     /// # Examples
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::{AluFunct, AluInputs};
     /// let or_inputs = AluInputs::new(
     ///     false,                  // enable_n
-    ///     AluFunct::OR.to_u8(),   // funct3
+    ///     AluFunct::OR.into(),    // funct3
     ///     false,                  // arithmetic_shift
     ///     0x55555555,             // a
     ///     0x66666666,             // b
@@ -81,11 +81,11 @@ impl AluInputs {
     /// assert_eq!(or_output, Some(0x77777777));
     /// ```
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::{AluFunct, AluInputs};
     /// let sra_inputs = AluInputs::new(
     ///     false,                  // enable_n
-    ///     AluFunct::SR.to_u8(),   // funct3
+    ///     AluFunct::SR.into(),    // funct3
     ///     true,                   // arithmetic_shift
     ///     0x12345678,             // a
     ///     0x00000008,             // shamt; only lowest 5 bits are used
@@ -94,11 +94,11 @@ impl AluInputs {
     /// assert_eq!(sra_output, Some(0x00123456));
     /// ```
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::{AluFunct, AluInputs};
     /// let hi_z_inputs = AluInputs::new(
     ///     true,                   // enable_n
-    ///     AluFunct::AND.to_u8(),  // funct3
+    ///     AluFunct::AND.into(),   // funct3
     ///     false,                  // arithmetic_shift
     ///     0x76543210,             // a
     ///     0x01234567,             // b
@@ -135,6 +135,7 @@ impl AluInputs {
     }
 }
 
+/// Functions ALU can compute
 #[derive(Debug, PartialEq)]
 pub enum AluFunct {
     ADD = 0,
@@ -147,20 +148,20 @@ pub enum AluFunct {
     AND = 7,
 }
 
-impl AluFunct {
-    /// Convert lowest 3 bits of a u8 to AluFunct
+impl From<u8> for AluFunct {
+    /// Convert lowest 3 bits of a `u8` to `AluFunct`
     ///
     /// # Example
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::AluFunct;
     /// let xor_code = 4;
-    /// let alu_xor = AluFunct::from(xor_code);
+    /// let alu_xor: AluFunct = xor_code.into();
     ///
     /// assert_eq!(alu_xor, AluFunct::XOR);
     /// ```
-    pub fn from(funct3: u8) -> AluFunct {
-        match funct3 & 0x7 {
+    fn from(funct3: u8) -> AluFunct {
+        match funct3 & 0x07 {
             0 => AluFunct::ADD,
             1 => AluFunct::SLL,
             2 => AluFunct::SLT,
@@ -169,32 +170,25 @@ impl AluFunct {
             5 => AluFunct::SR,
             6 => AluFunct::OR,
             7 => AluFunct::AND,
-            _ => AluFunct::ADD, // to make compiler happy
+            _ => unreachable!(),
         }
     }
+}
 
-    /// Convert lowest 3 bits of a `u8` to `AluFunct`
+impl From<AluFunct> for u8 {
+    /// Convert `AluFunct` to u8
     ///
     /// # Example
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::AluFunct;
     /// let alu_and = AluFunct::AND;
-    /// let and_code = alu_and.to_u8();
+    /// let and_code: u8 = alu_and.into();
     ///
     /// assert_eq!(and_code, 7);
     /// ```
-    pub fn to_u8(&self) -> u8 {
-        match self {
-            AluFunct::ADD => 0,
-            AluFunct::SLL => 1,
-            AluFunct::SLT => 2,
-            AluFunct::SLTU => 3,
-            AluFunct::XOR => 4,
-            AluFunct::SR => 5,
-            AluFunct::OR => 6,
-            AluFunct::AND => 7,
-        }
+    fn from(alu_funct: AluFunct) -> Self {
+        alu_funct as u8
     }
 }
 
@@ -254,7 +248,7 @@ impl TestVector for AluRegImmTestVector {
     ///
     /// # Examples
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::{
     /// #     ALU_REG_IMM_OPCODE,
     /// #     Alu,
@@ -269,13 +263,13 @@ impl TestVector for AluRegImmTestVector {
     ///     instruction: IType::new(
     ///         ALU_REG_IMM_OPCODE,     // opcode
     ///         0x0e,                   // rd
-    ///         AluFunct::AND.to_u8(),  // funct3
+    ///         AluFunct::AND.into(),   // funct3
     ///         0x1c,                   // rs1
     ///         0x555,                  // imm
     ///     ),
     ///     alu: Alu::from(AluInputs::new(
     ///         false,                  // enable_n
-    ///         AluFunct::AND.to_u8(),  // funct3
+    ///         AluFunct::AND.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x33333333,             // a: *x28
     ///         0x00000555,             // b: imm
@@ -288,7 +282,7 @@ impl TestVector for AluRegImmTestVector {
     /// );
     /// ```
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::{
     /// #     ALU_REG_IMM_OPCODE,
     /// #     Alu,
@@ -303,13 +297,13 @@ impl TestVector for AluRegImmTestVector {
     ///     instruction: IType::new(
     ///         ALU_REG_IMM_OPCODE,     // opcode
     ///         0x12,                   // rd
-    ///         AluFunct::XOR.to_u8(),  // funct3
+    ///         AluFunct::XOR.into(),   // funct3
     ///         0x03,                   // rs1
     ///         0x02a,                  // imm
     ///     ),
     ///     alu: Alu::from(AluInputs::new(
     ///         true,                   // enable_n
-    ///         AluFunct::XOR.to_u8(),  // funct3
+    ///         AluFunct::XOR.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x45454545,             // a: *x3
     ///         0x0000002a,             // b: imm
@@ -395,7 +389,7 @@ impl TestVector for AluRegRegTestVector {
     ///
     /// # Examples
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::{
     /// #     ALU_REG_REG_OPCODE,
     /// #     Alu,
@@ -410,14 +404,14 @@ impl TestVector for AluRegRegTestVector {
     ///     instruction: RType::new(
     ///         ALU_REG_REG_OPCODE,     // opcode
     ///         0x0e,                   // rd
-    ///         AluFunct::AND.to_u8(),  // funct3
+    ///         AluFunct::AND.into(),   // funct3
     ///         0x1c,                   // rs1
     ///         0x02,                   // rs2
     ///         0x00,                   // funct7
     ///     ),
     ///     alu: Alu::from(AluInputs::new(
     ///         false,                  // enable_n
-    ///         AluFunct::AND.to_u8(),  // funct3
+    ///         AluFunct::AND.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x33333333,             // a: *x28
     ///         0x55555555,             // b: *x2
@@ -430,7 +424,7 @@ impl TestVector for AluRegRegTestVector {
     /// );
     /// ```
     ///
-    /// ```rust
+    /// ```
     /// # use test_generation::alu::{
     /// #     ALU_REG_REG_OPCODE,
     /// #     Alu,
@@ -445,14 +439,14 @@ impl TestVector for AluRegRegTestVector {
     ///     instruction: RType::new(
     ///         ALU_REG_REG_OPCODE,     // opcode
     ///         0x12,                   // rd
-    ///         AluFunct::XOR.to_u8(),  // funct3
+    ///         AluFunct::XOR.into(),   // funct3
     ///         0x03,                   // rs1
     ///         0x1f,                   // rs2
     ///         0x00,                   // funct7
     ///     ),
     ///     alu: Alu::from(AluInputs::new(
     ///         true,                   // enable_n
-    ///         AluFunct::XOR.to_u8(),  // funct3
+    ///         AluFunct::XOR.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x45454545,             // a: *x3
     ///         0x2a2a2a2a,             // b: *x31
