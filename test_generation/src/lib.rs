@@ -8,17 +8,28 @@ use std::io;
 use std::io::ErrorKind;
 use std::path::PathBuf;
 
+/// ALU functionality, ALU register-immediate and register-register test vectors
 pub mod alu;
+
+/// Instruction type definitions and respective functions
 pub mod instruction;
+
+/// Generic test vector definitions
 pub mod test_vector;
 
+// Directory where generated test vector files are located
 const TEST_DIR: &str = "../tests/"; // relative to crate root
+
+// Test vector files inside TEST_DIR
 const ALU_REG_IMM_FILE_NAME: &str = "alu_reg_imm.tv";
 const ALU_REG_REG_FILE_NAME: &str = "alu_reg_reg.tv";
+
+// Number of vectors to generate
 const NUM_VECTORS: usize = 100;
 
+// Get root directory of crate
 // Stolen from https://docs.rs/project-root/latest/project_root/fn.get_project_root.html
-fn get_project_root() -> io::Result<PathBuf> {
+fn get_crate_root() -> io::Result<PathBuf> {
     let path = env::current_dir()?;
     let mut path_ancestors = path.as_path().ancestors();
 
@@ -40,7 +51,7 @@ fn get_project_root() -> io::Result<PathBuf> {
 pub fn run() -> Result<(), Box<dyn Error>> {
     let mut rng = StdRng::seed_from_u64(0);
 
-    let crate_root = get_project_root()?;
+    let crate_root = get_crate_root()?;
     let test_dir = crate_root.join(TEST_DIR);
     let alu_reg_imm = test_dir.join(ALU_REG_IMM_FILE_NAME);
     let alu_reg_reg = test_dir.join(ALU_REG_REG_FILE_NAME);

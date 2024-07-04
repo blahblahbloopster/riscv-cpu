@@ -9,6 +9,7 @@ pub const ALU_REG_REG_OPCODE: u8 = 0x33;
 const DISABLE_PROBABILITY: f64 = 0.20;
 const ARITHMETIC_SHIFT_PROBABILITY: f64 = 0.50;
 
+/// ALU state containing inputs and output.
 pub struct Alu {
     inputs: AluInputs,
     result: Option<u32>,
@@ -27,11 +28,14 @@ impl Alu {
     }
 
     /// Get result of `Alu` computation
+    /// If result is `Some(value)`, then `value` will be set on ALU output bus.
+    /// If result is `None`, then ALU output will be high impedance.
     pub fn result(&self) -> Option<u32> {
         self.result
     }
 }
 
+/// Inputs to ALU
 pub struct AluInputs {
     enable_n: bool,
     funct3: u8,
@@ -192,9 +196,10 @@ impl From<AluFunct> for u8 {
     }
 }
 
+/// Test vector for ALU register-immediate operations
 pub struct AluRegImmTestVector {
-    pub instruction: IType,
-    pub alu: Alu,
+    instruction: IType,
+    alu: Alu,
 }
 
 impl AluRegImmTestVector {
@@ -203,10 +208,12 @@ impl AluRegImmTestVector {
         AluRegImmTestVector { instruction, alu }
     }
 
+    /// Get test vector instruction
     pub fn instruction(&self) -> &IType {
         &self.instruction
     }
 
+    /// Get test vector ALU state
     pub fn alu(&self) -> &Alu {
         &self.alu
     }
@@ -259,22 +266,22 @@ impl TestVector for AluRegImmTestVector {
     /// # use test_generation::instruction::IType;
     /// # use test_generation::test_vector::TestVector;
     /// #
-    /// let and_vector = AluRegImmTestVector {
-    ///     instruction: IType::new(
+    /// let and_vector = AluRegImmTestVector::new(
+    ///     IType::new(
     ///         ALU_REG_IMM_OPCODE,     // opcode
-    ///         0x0e,                   // rd
+    ///         14,                     // rd
     ///         AluFunct::AND.into(),   // funct3
-    ///         0x1c,                   // rs1
+    ///         28,                     // rs1
     ///         0x555,                  // imm
     ///     ),
-    ///     alu: Alu::from(AluInputs::new(
+    ///     Alu::from(AluInputs::new(
     ///         false,                  // enable_n
     ///         AluFunct::AND.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x33333333,             // a: *x28
     ///         0x00000555,             // b: imm
     ///     )),
-    /// };
+    /// );
     ///
     /// assert_eq!(
     ///     and_vector.to_string(),
@@ -293,22 +300,22 @@ impl TestVector for AluRegImmTestVector {
     /// # use test_generation::instruction::IType;
     /// # use test_generation::test_vector::TestVector;
     /// #
-    /// let hi_z_vector = AluRegImmTestVector {
-    ///     instruction: IType::new(
+    /// let hi_z_vector = AluRegImmTestVector::new(
+    ///     IType::new(
     ///         ALU_REG_IMM_OPCODE,     // opcode
-    ///         0x12,                   // rd
+    ///         18,                     // rd
     ///         AluFunct::XOR.into(),   // funct3
-    ///         0x03,                   // rs1
+    ///         3,                      // rs1
     ///         0x02a,                  // imm
     ///     ),
-    ///     alu: Alu::from(AluInputs::new(
+    ///     Alu::from(AluInputs::new(
     ///         true,                   // enable_n
     ///         AluFunct::XOR.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x45454545,             // a: *x3
     ///         0x0000002a,             // b: imm
     ///     )),
-    /// };
+    /// );
     ///
     /// assert_eq!(
     ///     hi_z_vector.to_string(),
@@ -332,9 +339,10 @@ impl TestVector for AluRegImmTestVector {
     }
 }
 
+/// Test vector for ALU register-register operations
 pub struct AluRegRegTestVector {
-    pub instruction: RType,
-    pub alu: Alu,
+    instruction: RType,
+    alu: Alu,
 }
 
 impl AluRegRegTestVector {
@@ -343,10 +351,12 @@ impl AluRegRegTestVector {
         AluRegRegTestVector { instruction, alu }
     }
 
+    /// Get test vector instruction
     pub fn instruction(&self) -> &RType {
         &self.instruction
     }
 
+    /// Get test vector ALU state
     pub fn alu(&self) -> &Alu {
         &self.alu
     }
@@ -400,23 +410,23 @@ impl TestVector for AluRegRegTestVector {
     /// # use test_generation::instruction::RType;
     /// # use test_generation::test_vector::TestVector;
     /// #
-    /// let and_vector = AluRegRegTestVector {
-    ///     instruction: RType::new(
+    /// let and_vector = AluRegRegTestVector::new(
+    ///     RType::new(
     ///         ALU_REG_REG_OPCODE,     // opcode
-    ///         0x0e,                   // rd
+    ///         14,                     // rd
     ///         AluFunct::AND.into(),   // funct3
-    ///         0x1c,                   // rs1
-    ///         0x02,                   // rs2
+    ///         28,                     // rs1
+    ///         2,                      // rs2
     ///         0x00,                   // funct7
     ///     ),
-    ///     alu: Alu::from(AluInputs::new(
+    ///     Alu::from(AluInputs::new(
     ///         false,                  // enable_n
     ///         AluFunct::AND.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x33333333,             // a: *x28
     ///         0x55555555,             // b: *x2
     ///     )),
-    /// };
+    /// );
     ///
     /// assert_eq!(
     ///     and_vector.to_string(),
@@ -435,23 +445,23 @@ impl TestVector for AluRegRegTestVector {
     /// # use test_generation::instruction::RType;
     /// # use test_generation::test_vector::TestVector;
     /// #
-    /// let hi_z_vector = AluRegRegTestVector {
-    ///     instruction: RType::new(
+    /// let hi_z_vector = AluRegRegTestVector::new(
+    ///     RType::new(
     ///         ALU_REG_REG_OPCODE,     // opcode
-    ///         0x12,                   // rd
+    ///         18,                     // rd
     ///         AluFunct::XOR.into(),   // funct3
-    ///         0x03,                   // rs1
-    ///         0x1f,                   // rs2
+    ///         3,                      // rs1
+    ///         31,                     // rs2
     ///         0x00,                   // funct7
     ///     ),
-    ///     alu: Alu::from(AluInputs::new(
+    ///     Alu::from(AluInputs::new(
     ///         true,                   // enable_n
     ///         AluFunct::XOR.into(),   // funct3
     ///         false,                  // arithmetic_shift
     ///         0x45454545,             // a: *x3
     ///         0x2a2a2a2a,             // b: *x31
     ///     )),
-    /// };
+    /// );
     ///
     /// assert_eq!(
     ///     hi_z_vector.to_string(),
