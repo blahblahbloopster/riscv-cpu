@@ -1,24 +1,57 @@
-use rand::{SeedableRng, rngs::StdRng};
+use rand::rngs::StdRng;
+use rand::SeedableRng;
+use std::env;
 use std::error::Error;
+use std::ffi::OsString;
+use std::fs::read_dir;
+use std::io;
+use std::io::ErrorKind;
+use std::path::PathBuf;
 
 pub mod alu;
 pub mod instruction;
 pub mod test_vector;
 
-const ALU_REG_IMM_VECTOR_FILE_PATH: &str = "../tests/alu_reg_imm.tv";
-const ALU_REG_REG_VECTOR_FILE_PATH: &str = "../tests/alu_reg_reg.tv";
+const TEST_DIR: &str = "../tests/"; // relative to crate root
+const ALU_REG_IMM_FILE_NAME: &str = "alu_reg_imm.tv";
+const ALU_REG_REG_FILE_NAME: &str = "alu_reg_reg.tv";
 const NUM_VECTORS: usize = 100;
+
+// Stolen from https://docs.rs/project-root/latest/project_root/fn.get_project_root.html
+pub fn get_project_root() -> io::Result<PathBuf> {
+    let path = env::current_dir()?;
+    let mut path_ancestors = path.as_path().ancestors();
+
+    while let Some(p) = path_ancestors.next() {
+        let has_cargo = read_dir(p)?
+            .into_iter()
+            .any(|p| p.unwrap().file_name() == OsString::from("Cargo.lock"));
+        if has_cargo {
+            return Ok(PathBuf::from(p));
+        }
+    }
+    Err(io::Error::new(
+        ErrorKind::NotFound,
+        "Could not determine project root directory.",
+    ))
+}
 
 /// Execute test vector generation
 pub fn run() -> Result<(), Box<dyn Error>> {
     let mut rng = StdRng::seed_from_u64(0);
+
+    let crate_root = get_project_root()?;
+    let test_dir = crate_root.join(TEST_DIR);
+    let alu_reg_imm = test_dir.join(ALU_REG_IMM_FILE_NAME);
+    let alu_reg_reg = test_dir.join(ALU_REG_REG_FILE_NAME);
+
     test_vector::generate_vectors::<alu::AluRegImmTestVector>(
-        ALU_REG_IMM_VECTOR_FILE_PATH,
+        alu_reg_imm,
         NUM_VECTORS,
         &mut rng,
     )?;
     test_vector::generate_vectors::<alu::AluRegRegTestVector>(
-        ALU_REG_REG_VECTOR_FILE_PATH,
+        alu_reg_reg,
         NUM_VECTORS,
         &mut rng,
     )?;
