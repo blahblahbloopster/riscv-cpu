@@ -4,6 +4,9 @@
 !*/
 !Makefile
 
+# Rust build files
+target/
+
 # Quartus Files
 *.bak
 *.qsf
