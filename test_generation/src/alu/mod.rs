@@ -122,31 +122,6 @@ impl AluState {
 
     /// Computes output of alu from inputs. Returns `Some(u32)` if enabled and
     /// `None` if disabled.
-    // ```
-    // # use test_generation::alu::{AluFunct, AluInputs};
-    // let sra_inputs = AluInputs::new(
-    //     false,                  // enable_n
-    //     AluFunct::SR.into(),    // funct3
-    //     true,                   // arithmetic_shift
-    //     0x12345678,             // a
-    //     0x00000008,             // shamt; only lowest 5 bits are used
-    // );
-    // let sra_output = sra_inputs.compute_result();
-    // assert_eq!(sra_output, Some(0x00123456));
-    // ```
-    //
-    // ```
-    // # use test_generation::alu::{AluFunct, AluInputs};
-    // let hi_z_inputs = AluInputs::new(
-    //     true,                   // enable_n
-    //     AluFunct::AND.into(),   // funct3
-    //     false,                  // arithmetic_shift
-    //     0x76543210,             // a
-    //     0x01234567,             // b
-    // );
-    // let hi_z_output = hi_z_inputs.compute_result();
-    // assert_eq!(hi_z_output, None);
-    // ```
     fn compute_result(inputs: &AluInputs) -> Option<u32> {
         if inputs.enable_n {
             return None;
