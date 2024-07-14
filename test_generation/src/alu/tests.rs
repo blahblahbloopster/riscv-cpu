@@ -1,22 +1,22 @@
-use super::{Alu, AluFunct, AluInputs};
+use crate::alu::{Alu, AluFunct, AluInputs};
 
 macro_rules! test_funct_from_u8 {
     ($name:ident, $expected:expr, $input:expr) => {
         #[test]
         fn $name() {
-            assert_eq!($expected, $input.into());
+            assert_eq!($expected, AluFunct::from($input));
         }
     }
 }
 
-test_funct_from_u8!(u8_to_add,  AluFunct::ADD,  0);
-test_funct_from_u8!(u8_to_sll,  AluFunct::SLL,  1);
-test_funct_from_u8!(u8_to_slt,  AluFunct::SLT,  2);
-test_funct_from_u8!(u8_to_sltu, AluFunct::SLTU, 3);
-test_funct_from_u8!(u8_to_xor,  AluFunct::XOR,  4);
-test_funct_from_u8!(u8_to_sr,   AluFunct::SR,   5);
-test_funct_from_u8!(u8_to_or,   AluFunct::OR,   6);
-test_funct_from_u8!(u8_to_and,  AluFunct::AND,  7);
+test_funct_from_u8!(u8_to_add,  AluFunct::ADD,  0u8);
+test_funct_from_u8!(u8_to_sll,  AluFunct::SLL,  1u8);
+test_funct_from_u8!(u8_to_slt,  AluFunct::SLT,  2u8);
+test_funct_from_u8!(u8_to_sltu, AluFunct::SLTU, 3u8);
+test_funct_from_u8!(u8_to_xor,  AluFunct::XOR,  4u8);
+test_funct_from_u8!(u8_to_sr,   AluFunct::SR,   5u8);
+test_funct_from_u8!(u8_to_or,   AluFunct::OR,   6u8);
+test_funct_from_u8!(u8_to_and,  AluFunct::AND,  7u8);
 
 macro_rules! test_funct_to_u8 {
     ($name:ident, $expected:expr, $input:expr) => {
@@ -27,14 +27,14 @@ macro_rules! test_funct_to_u8 {
     }
 }
 
-test_funct_to_u8!(add_to_u8,  AluFunct::ADD,  0);
-test_funct_to_u8!(sll_to_u8,  AluFunct::SLL,  1);
-test_funct_to_u8!(slt_to_u8,  AluFunct::SLT,  2);
-test_funct_to_u8!(sltu_to_u8, AluFunct::SLTU, 3);
-test_funct_to_u8!(xor_to_u8,  AluFunct::XOR,  4);
-test_funct_to_u8!(sr_to_u8,   AluFunct::SR,   5);
-test_funct_to_u8!(or_to_u8,   AluFunct::OR,   6);
-test_funct_to_u8!(and_to_u8,  AluFunct::AND,  7);
+test_funct_to_u8!(add_to_u8,  0u8, AluFunct::ADD );
+test_funct_to_u8!(sll_to_u8,  1u8, AluFunct::SLL );
+test_funct_to_u8!(slt_to_u8,  2u8, AluFunct::SLT );
+test_funct_to_u8!(sltu_to_u8, 3u8, AluFunct::SLTU);
+test_funct_to_u8!(xor_to_u8,  4u8, AluFunct::XOR );
+test_funct_to_u8!(sr_to_u8,   5u8, AluFunct::SR  );
+test_funct_to_u8!(or_to_u8,   6u8, AluFunct::OR  );
+test_funct_to_u8!(and_to_u8,  7u8, AluFunct::AND );
 
 macro_rules! test_alu {
     ($name:ident, $funct:expr, $alt:expr, $enable_n:expr, $expected:expr, $a:expr, $b:expr)  => {
