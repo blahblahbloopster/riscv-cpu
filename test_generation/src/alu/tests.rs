@@ -1,184 +1,123 @@
-use super::{Alu, AluFunct, AluInputs, AluState};
+use super::{Alu, AluFunct, AluInputs};
 
-macro_rules! test_add {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
+macro_rules! test_funct_from_u8 {
+    ($name:ident, $expected:expr, $input:expr) => {
         #[test]
-        fn $num() {
+        fn $name() {
+            assert_eq!($expected, $input.into());
+        }
+    }
+}
+
+test_funct_from_u8!(u8_to_add,  AluFunct::ADD,  0);
+test_funct_from_u8!(u8_to_sll,  AluFunct::SLL,  1);
+test_funct_from_u8!(u8_to_slt,  AluFunct::SLT,  2);
+test_funct_from_u8!(u8_to_sltu, AluFunct::SLTU, 3);
+test_funct_from_u8!(u8_to_xor,  AluFunct::XOR,  4);
+test_funct_from_u8!(u8_to_sr,   AluFunct::SR,   5);
+test_funct_from_u8!(u8_to_or,   AluFunct::OR,   6);
+test_funct_from_u8!(u8_to_and,  AluFunct::AND,  7);
+
+macro_rules! test_funct_to_u8 {
+    ($name:ident, $expected:expr, $input:expr) => {
+        #[test]
+        fn $name() {
+            assert_eq!($expected, $input.into());
+        }
+    }
+}
+
+test_funct_to_u8!(add_to_u8,  AluFunct::ADD,  0);
+test_funct_to_u8!(sll_to_u8,  AluFunct::SLL,  1);
+test_funct_to_u8!(slt_to_u8,  AluFunct::SLT,  2);
+test_funct_to_u8!(sltu_to_u8, AluFunct::SLTU, 3);
+test_funct_to_u8!(xor_to_u8,  AluFunct::XOR,  4);
+test_funct_to_u8!(sr_to_u8,   AluFunct::SR,   5);
+test_funct_to_u8!(or_to_u8,   AluFunct::OR,   6);
+test_funct_to_u8!(and_to_u8,  AluFunct::AND,  7);
+
+macro_rules! test_alu {
+    ($name:ident, $funct:expr, $alt:expr, $enable_n:expr, $expected:expr, $a:expr, $b:expr)  => {
+        #[test]
+        fn $name() {
             let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::ADD.into(),
-                false,
+            let alu_inputs = AluInputs::new(
+                $enable_n,
+                $funct.into(),
+                $alt,
                 $a,
                 $b,
             );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
+            let result = alu.get_state(alu_inputs).result;
+            assert_eq!(result, $expected);
         }
     };
+}
+
+macro_rules! test_add {
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::ADD, false, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_sub {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::ADD.into(),
-                true,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::ADD, true, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_sll {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::SLL.into(),
-                false,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::SLL, false, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_slt {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::SLT.into(),
-                false,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::SLT, false, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_sltu {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::SLTU.into(),
-                false,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::SLTU, false, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_xor {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::XOR.into(),
-                false,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::XOR, false, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_srl {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::SR.into(),
-                false,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::SR, false, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_sra {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::SR.into(),
-                true,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::SR, true, false, Some($expected), $a, $b);
+    }
 }
 
 macro_rules! test_or {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::OR.into(),
-                false,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::OR, false, false, Some($expected), $a, $b);
+    }
 }
 
-
 macro_rules! test_and {
-    ($num:ident, $expected:expr, $a:expr, $b:expr) => {
-        #[test]
-        fn $num() {
-            let alu = Alu::new();
-            let add_inputs = AluInputs::new(
-                false,
-                AluFunct::AND.into(),
-                false,
-                $a,
-                $b,
-            );
-            let result = alu.get_state(add_inputs).result;
-            assert_eq!(result, Some($expected));
-        }
-    };
+    ($name:ident, $expected:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, AluFunct::AND, false, false, Some($expected), $a, $b);
+    }
+}
+
+macro_rules! test_disabled {
+    ($name:ident, $funct:expr, $alt:expr, $a:expr, $b:expr)  => {
+        test_alu!($name, $funct, $alt, true, None, $a, $b);
+    }
 }
 
 // ALU tests taken from https://github.com/riscv-software-src/riscv-tests/tree/160bdaa323bc8f8e651f9f546822336cf17d92f5/isa/rv32ui
@@ -348,6 +287,12 @@ test_sra!(sra_13, 0xc0c0c0c0, 0x81818181, 1 );
 test_sra!(sra_14, 0xff030303, 0x81818181, 7 );
 test_sra!(sra_15, 0xfffe0606, 0x81818181, 14);
 test_sra!(sra_16, 0xffffffff, 0x81818181, 31);
+  
+test_sra!(sra_17, 0x81818181, 0x81818181, 0xffffffc0);
+test_sra!(sra_18, 0xc0c0c0c0, 0x81818181, 0xffffffc1);
+test_sra!(sra_19, 0xff030303, 0x81818181, 0xffffffc7);
+test_sra!(sra_20, 0xfffe0606, 0x81818181, 0xffffffce);
+test_sra!(sra_21, 0xffffffff, 0x81818181, 0xffffffff);
 
 // OR
 
@@ -362,3 +307,16 @@ test_and!(and_2, 0x0f000f00, 0xff00ff00, 0x0f0f0f0f);
 test_and!(and_3, 0x00f000f0, 0x0ff00ff0, 0xf0f0f0f0);
 test_and!(and_4, 0x000f000f, 0x00ff00ff, 0x0f0f0f0f);
 test_and!(and_5, 0xf000f000, 0xf00ff00f, 0xf0f0f0f0);
+
+// DISABLED
+
+test_disabled!(dis_1,  AluFunct::ADD,  false, 0xffffffff, 0x00000001);
+test_disabled!(dis_2,  AluFunct::ADD,  true,  0x7fffffff, 0x00000000);
+test_disabled!(dis_3,  AluFunct::SLL,  false, 0x21212121, 0xffffffe1);
+test_disabled!(dis_4,  AluFunct::SLT,  false, 0xffffffff, 0x00000001);
+test_disabled!(dis_5,  AluFunct::SLTU, false, 0xffffffff, 0x00000001);
+test_disabled!(dis_6,  AluFunct::XOR,  false, 0x00ff00ff, 0x0f0f0f0f);
+test_disabled!(dis_7,  AluFunct::SR,   false, 0x21212121, 0xffffffe7);
+test_disabled!(dis_8,  AluFunct::SR,   true,  0x81818181, 14);
+test_disabled!(dis_9,  AluFunct::OR,   false, 0x00ff00ff, 0x0f0f0f0f);
+test_disabled!(dis_10, AluFunct::AND,  false, 0x00ff00ff, 0x0f0f0f0f);
