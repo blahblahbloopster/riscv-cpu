@@ -1,12 +1,12 @@
-use crate::cpu::Cpu;
-use crate::instruction::InstructionType;
-use crate::instruction::r_type::RType;
-use crate::test_vector::TestVector;
 use super::AluFunct;
 use super::AluInputs;
 use super::AluState;
 use super::PROB_ALTERNATE_FUNC;
 use super::PROB_DISABLE;
+use crate::cpu::Cpu;
+use crate::instruction::r_type::RType;
+use crate::instruction::InstructionType;
+use crate::test_vector::TestVector;
 use rand::Rng;
 
 pub const ALU_REG_REG_OPCODE: u8 = 0x33;
