@@ -1,8 +1,8 @@
 use super::AluFunct;
 use super::AluInputs;
 use super::AluState;
-use super::ARITHMETIC_SHIFT_PROBABILITY;
-use super::DISABLE_PROBABILITY;
+use super::PROB_ALTERNATE_FUNC;
+use super::PROB_DISABLE;
 use crate::cpu::Cpu;
 use crate::instruction::i_type::IType;
 use crate::instruction::InstructionType;
@@ -58,11 +58,11 @@ impl TestVector for AluRegImmTestVector {
         );
 
         let alu_inputs = AluInputs {
-            enable_n: rng.gen_bool(DISABLE_PROBABILITY),
+            enable_n: rng.gen_bool(PROB_DISABLE),
             funct3: instruction.funct3(),
-            arithmetic_shift: {
+            alt_func: {
                 if AluFunct::from(instruction.funct3()) == AluFunct::SR {
-                    rng.gen_bool(ARITHMETIC_SHIFT_PROBABILITY)
+                    rng.gen_bool(PROB_ALTERNATE_FUNC)
                 } else {
                     false
                 }
@@ -157,7 +157,7 @@ impl TestVector for AluRegImmTestVector {
             self.alu_state.inputs.a,
             self.alu_state.inputs.b,
             self.alu_state.inputs.funct3,
-            self.alu_state.inputs.arithmetic_shift as u8,
+            self.alu_state.inputs.alt_func as u8,
             match self.alu_state.result() {
                 Some(n) => format!("{n:08x}"),
                 None => "zzzzzzzz".to_string(),

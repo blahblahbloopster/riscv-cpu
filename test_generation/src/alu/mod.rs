@@ -1,12 +1,14 @@
 pub mod reg_imm_test;
 pub mod reg_reg_test;
+
+#[cfg(test)]
 mod tests;
 
 /// Probability ALU module is disabled during testing
-const DISABLE_PROBABILITY: f64 = 0.20;
+const PROB_DISABLE: f64 = 0.20;
 
-/// Probability ALU right shift is arithmetic vs logical
-const ARITHMETIC_SHIFT_PROBABILITY: f64 = 0.50;
+/// Probability of changing ADD to SUB or SRL to SRA
+const PROB_ALTERNATE_FUNC: f64 = 0.50;
 
 /// Functions ALU can compute
 #[derive(Debug, PartialEq)]
@@ -69,7 +71,7 @@ impl From<AluFunct> for u8 {
 pub struct AluInputs {
     enable_n: bool,
     funct3: u8,
-    arithmetic_shift: bool,
+    alt_func: bool,
     a: u32,
     b: u32,
 }
@@ -79,19 +81,21 @@ impl AluInputs {
     pub fn new(
         enable_n: bool,
         funct3: u8,
-        arithmetic_shift: bool,
+        alt_func: bool,
         a: u32,
         b: u32,
     ) -> AluInputs {
-        // only allow arithmetic shift on right shift funct
-        if arithmetic_shift {
-            assert_eq!(funct3, AluFunct::SR.into());
+        // only allow changing ADD to SUB or SRL to SRA
+        if alt_func {
+            assert!(
+                funct3 == AluFunct::SR.into() || funct3 == AluFunct::ADD.into()
+            );
         }
 
         AluInputs {
             enable_n,
             funct3,
-            arithmetic_shift,
+            alt_func,
             a,
             b,
         }
@@ -129,9 +133,17 @@ impl AluState {
 
         let shamt = inputs.b & 0x1f;
         Some(match AluFunct::from(inputs.funct3) {
-            AluFunct::ADD => match inputs.a.overflowing_add(inputs.b) {
-                (value, _overflow) => value,
-            },
+            AluFunct::ADD => {
+                if inputs.alt_func {
+                    match inputs.a.overflowing_sub(inputs.b) {
+                        (value, _overflow) => value,
+                    }
+                } else {
+                    match inputs.a.overflowing_add(inputs.b) {
+                        (value, _overflow) => value,
+                    }
+                }
+            }
             AluFunct::SLL => match inputs.a.overflowing_shl(shamt) {
                 (value, _overflow) => value,
             },
@@ -139,7 +151,7 @@ impl AluState {
             AluFunct::SLTU => (inputs.a < inputs.b) as u32,
             AluFunct::XOR => inputs.a ^ inputs.b,
             AluFunct::SR => {
-                if inputs.arithmetic_shift {
+                if inputs.alt_func {
                     (inputs.a as i32 >> shamt) as u32
                 } else {
                     inputs.a >> shamt
