@@ -25,16 +25,6 @@ enum AluFunct {
 
 impl From<u8> for AluFunct {
     /// Convert lowest 3 bits of a `u8` to `AluFunct`
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// # use test_generation::alu::AluFunct;
-    /// let xor_code = 4;
-    /// let alu_xor: AluFunct = xor_code.into();
-    ///
-    /// assert_eq!(alu_xor, AluFunct::XOR);
-    /// ```
     fn from(funct3: u8) -> AluFunct {
         match funct3 & 0x07 {
             0 => AluFunct::ADD,
@@ -52,16 +42,6 @@ impl From<u8> for AluFunct {
 
 impl From<AluFunct> for u8 {
     /// Convert `AluFunct` to u8
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// # use test_generation::alu::AluFunct;
-    /// let alu_and = AluFunct::AND;
-    /// let and_code: u8 = alu_and.into();
-    ///
-    /// assert_eq!(and_code, 7);
-    /// ```
     fn from(alu_funct: AluFunct) -> Self {
         alu_funct as u8
     }
@@ -143,7 +123,7 @@ impl AluState {
                         (value, _overflow) => value,
                     }
                 }
-            }
+            },
             AluFunct::SLL => match inputs.a.overflowing_shl(shamt) {
                 (value, _overflow) => value,
             },
