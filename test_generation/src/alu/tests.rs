@@ -181,8 +181,7 @@ macro_rules! test_and {
     };
 }
 
-// ALU tests taken from https://github.com/riscv-software-src/riscv-tests/tree/197479964e99ee9a0b196c9cc1a3249812477bd3/isa/rv32ui
-
+// ALU tests taken from https://github.com/riscv-software-src/riscv-tests/tree/160bdaa323bc8f8e651f9f546822336cf17d92f5/isa/rv32ui
 // ADD
 
 test_add!(add_2,  0x00000000, 0x00000000, 0x00000000);
