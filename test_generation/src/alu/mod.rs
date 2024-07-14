@@ -51,7 +51,7 @@ impl From<AluFunct> for u8 {
 pub struct AluInputs {
     enable_n: bool,
     funct3: u8,
-    alt_func: bool,
+    alt_funct: bool,
     a: u32,
     b: u32,
 }
@@ -61,12 +61,12 @@ impl AluInputs {
     pub fn new(
         enable_n: bool,
         funct3: u8,
-        alt_func: bool,
+        alt_funct: bool,
         a: u32,
         b: u32,
     ) -> AluInputs {
         // only allow changing ADD to SUB or SRL to SRA
-        if alt_func {
+        if alt_funct {
             assert!(
                 funct3 == AluFunct::SR.into() || funct3 == AluFunct::ADD.into()
             );
@@ -75,7 +75,7 @@ impl AluInputs {
         AluInputs {
             enable_n,
             funct3,
-            alt_func,
+            alt_funct,
             a,
             b,
         }
@@ -89,6 +89,7 @@ pub struct AluState {
 }
 
 impl AluState {
+    /// Create representation of ALU state with inputs and result
     pub fn new(inputs: AluInputs) -> Self {
         Self {
             result: AluState::compute_result(&inputs),
@@ -96,10 +97,12 @@ impl AluState {
         }
     }
 
+    /// Get state inputs
     pub fn inputs(&self) -> &AluInputs {
         &self.inputs
     }
 
+    /// Get state result
     pub fn result(&self) -> &Option<u32> {
         &self.result
     }
@@ -114,7 +117,7 @@ impl AluState {
         let shamt = inputs.b & 0x1f;
         Some(match AluFunct::from(inputs.funct3) {
             AluFunct::ADD => {
-                if inputs.alt_func {
+                if inputs.alt_funct {
                     match inputs.a.overflowing_sub(inputs.b) {
                         (value, _overflow) => value,
                     }
@@ -131,7 +134,7 @@ impl AluState {
             AluFunct::SLTU => (inputs.a < inputs.b) as u32,
             AluFunct::XOR => inputs.a ^ inputs.b,
             AluFunct::SR => {
-                if inputs.alt_func {
+                if inputs.alt_funct {
                     (inputs.a as i32 >> shamt) as u32
                 } else {
                     inputs.a >> shamt
@@ -146,10 +149,12 @@ impl AluState {
 pub struct Alu {}
 
 impl Alu {
+    /// Create a new ALU module instance
     pub fn new() -> Alu {
         Self {}
     }
 
+    /// Load inputs and get ALU state
     pub fn get_state(&self, alu_inputs: AluInputs) -> AluState {
         AluState::new(alu_inputs)
     }

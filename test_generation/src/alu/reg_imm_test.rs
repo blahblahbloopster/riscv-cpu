@@ -60,7 +60,7 @@ impl TestVector for AluRegImmTestVector {
         let alu_inputs = AluInputs {
             enable_n: rng.gen_bool(PROB_DISABLE),
             funct3: instruction.funct3(),
-            alt_func: {
+            alt_funct: {
                 if AluFunct::from(instruction.funct3()) == AluFunct::SR {
                     rng.gen_bool(PROB_ALTERNATE_FUNC)
                 } else {
@@ -157,7 +157,7 @@ impl TestVector for AluRegImmTestVector {
             self.alu_state.inputs.a,
             self.alu_state.inputs.b,
             self.alu_state.inputs.funct3,
-            self.alu_state.inputs.alt_func as u8,
+            self.alu_state.inputs.alt_funct as u8,
             match self.alu_state.result() {
                 Some(n) => format!("{n:08x}"),
                 None => "zzzzzzzz".to_string(),
