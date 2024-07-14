@@ -1,4 +1,4 @@
-use rand::rngs::StdRng;
+use crate::cpu::Cpu;
 use std::error::Error;
 use std::fs::File;
 use std::io;
@@ -8,7 +8,7 @@ use std::path::PathBuf;
 /// Generic test vector. Should contain inputs and expected outputs.
 pub trait TestVector {
     /// Generate test vector with random inputs.
-    fn random(rng: &mut StdRng) -> Self;
+    fn random(cpu: &mut Cpu) -> Self;
 
     /// Convert test vector to string representation. Used to write test vector
     /// to file.
@@ -20,7 +20,7 @@ pub trait TestVector {
 pub fn generate_vectors<T: TestVector>(
     vector_file_path: PathBuf,
     num_vectors: usize,
-    rng: &mut StdRng,
+    cpu: &mut Cpu,
 ) -> Result<(), Box<dyn Error>> {
     let mut vector_file = match File::create(&vector_file_path) {
         Ok(file) => file,
@@ -35,7 +35,7 @@ pub fn generate_vectors<T: TestVector>(
     };
 
     for _ in 0..num_vectors {
-        let vector: T = T::random(rng);
+        let vector: T = T::random(cpu);
         vector_file.write(vector.to_string().as_bytes())?;
     }
 

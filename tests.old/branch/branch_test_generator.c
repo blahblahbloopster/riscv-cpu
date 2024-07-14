@@ -65,21 +65,22 @@ int main(void) {
         tv.expected.register_1 = random() & 0x1f;
         tv.expected.register_2 = random() & 0x1f;
         uint8_t opcode = random() % 6;  // 3 bits
-        if (opcode >= 2) opcode += 2;
+        if (opcode >= 2) {
+            opcode += 2;
+        }
         tv.expected.alu_op = (~opcode & 0x04) | (opcode >> 1);
         if (tv.expected.alu_op & 0x04) {
             tv.inputs.alu_out &= 0x00000001;
         }
 
         const uint16_t offset = random() & 0x0fff;  // 12 bits
-        tv.inputs.instruction = (0x00000063)  // branch opcode
-                              |  (opcode << 12)
-                              |  (((offset >> 11) & 0x0001) << 31)
-                              |  (((offset >> 10) & 0x0001) << 7)
-                              |  (((offset >> 4) & 0x003f) << 25)
-                              |  ((offset & 0x000f) << 8)
-                              |  (tv.expected.register_1 << 15)
-                              |  (tv.expected.register_2 << 20);
+        tv.inputs.instruction
+                = (0x00000063)  // branch opcode
+                | (opcode << 12) | (((offset >> 11) & 0x0001) << 31)
+                | (((offset >> 10) & 0x0001) << 7)
+                | (((offset >> 4) & 0x003f) << 25) | ((offset & 0x000f) << 8)
+                | (tv.expected.register_1 << 15)
+                | (tv.expected.register_2 << 20);
 
         tv.expected.alu_a = tv.inputs.register_data_1;
         tv.expected.alu_b = tv.inputs.register_data_2;
@@ -117,8 +118,7 @@ int main(void) {
                 output_strings.register_2, tv.inputs.register_data_1,
                 tv.inputs.register_data_2, output_strings.alu_a,
                 output_strings.alu_b, output_strings.alu_op, tv.inputs.alu_out,
-                output_strings.load_new_pc, output_strings.new_pc
-        );
+                output_strings.load_new_pc, output_strings.new_pc);
     }
 
     fclose(vector_file);

@@ -18,7 +18,7 @@ module branch (
     output logic [`XLEN-1:0] alu_a,
     output logic [`XLEN-1:0] alu_b,
     output logic [2:0]       alu_op,
-    output logic             alu_signal;
+    output logic             alu_signal,
     input  logic [`XLEN-1:0] alu_out,
 
     output logic             load_new_program_counter,
