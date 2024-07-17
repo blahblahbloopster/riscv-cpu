@@ -3,14 +3,14 @@
 `define PC_STEP    `XLEN'h00000004
 
 module program_counter (
-    input  logic             clk,
-    input  logic             reset_n,
-    input  logic             enable_n,
+    input   logic               clk,
+    input   logic               reset_n,
+    input   logic               enable_n,
 
-    input  logic             load_new_address,
-    input  logic [`XLEN-1:0] new_address,
+    input   logic               load_new_address,
+    input   logic [`XLEN-1:0]   new_address,
 
-    output logic [`XLEN-1:0] address
+    output  logic [`XLEN-1:0]   address
 );
 
     reg [`XLEN-1:0] value = `CODE_START;
