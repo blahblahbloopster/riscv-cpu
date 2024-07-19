@@ -18,7 +18,7 @@ module alu (
     input  logic                alt_funct,
     input  logic [`XLEN-1:0]    a,
     input  logic [`XLEN-1:0]    b,
-    output logic [`XLEN-1:0]    result,
+    output logic [`XLEN-1:0]    result
 );
 
     logic [4:0] shamt;
