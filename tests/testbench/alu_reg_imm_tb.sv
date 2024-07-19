@@ -1,21 +1,18 @@
 /*
- * Adapted from Harris & Harris Digital Design and Computer Achitecture
+ * Adapted from Harris & Harris Digital Design and Computer Architecture
  * Example 4.39 HDL Testbench with Test Vector File p 223
  */
 
-`define TEST_VECTOR_FILE_PATH "../tests/alu_reg_imm.tv"
-`define NUM_TESTS 10000
-`define VECTOR_SIZE 81
+`define TEST_VECTOR_FILE_PATH "vectors/alu_reg_imm.tv"
 `define VECTOR_DIM 6
 `define XLEN 32
 
-module alu_testbench();
+module alu_reg_imm_tb();
 
     typedef struct packed {
         logic               enable_n;
         logic [2:0]         funct3;
         logic               alt_funct;
-        logic               enable_n;
         logic [`XLEN-1:0]   a;
         logic [11:0]        imm;
     } Inputs;
@@ -25,7 +22,7 @@ module alu_testbench();
     } Outputs;
 
     typedef struct packed {
-        logic [`XLEN*8-1:0] result_str;
+        reg [`XLEN*8-1:0]   result;
     } OutputStrings;
 
     typedef struct packed {
@@ -38,51 +35,31 @@ module alu_testbench();
     TestVector              vector;
     Outputs                 outputs;
 
+    logic [`XLEN-1:0]       alu_b;
+
     int                     vector_file;
     int                     field_count;
-    logic [`XLEN-1:0]       vector_num;
-    logic [`XLEN-1:0]       num_errors;
+    int unsigned            vector_num;
+    int unsigned            num_errors;
 
     task open_file;
         input  string   file_path;
         output int      file;
     begin
+        string _header;
+
         // Open test vector file
         file = $fopen(file_path, "r");
         if (file == 0) begin
-            $display("Error: could not open test vector file.");
+            $display("Error: could not open test vector file %s.", file_path);
             $stop;
         end
 
         // Ignore header
-        field_count = $fscanf(vector_file, "%s\n");
+        $fgets(_header, file);
+        $display("Header: %s", _header);  // Debugging header content
     end
     endtask
-
-    // Convert string to logic value.
-    // A string of "z" sets all bits of `val` to z.
-    // A string of hex sets `val` to the hex value.
-    task to_logic;
-        input  string           str;
-        input  int              len;
-        output logic [len-1:0]  val;
-    begin
-        int str_len = len / 4;
-        int char_count;
-        case (str)
-            {str_len{"z"}}: val = len{1'hz};
-            default: begin
-                char_count = $sscanf(str, "%h", val);
-                if (char_count != str_len) begin
-                    $display("Error converting string %s to logic", str);
-                    $display("Expected %d chars, found %d", str_len, char_count);
-                    $stop;
-                end
-            end
-        endcase
-    end
-    endtask
-
 
     // Read next test vector in vector file
     task read_next_vector;
@@ -96,7 +73,7 @@ module alu_testbench();
         // Read file line
         field_count = $fscanf(
             fd,
-            "%01h %01h %01h %08h %08h %03h\n",
+            "%h %h %h %s %h %h\n",
             tv.inputs.funct3,
             tv.inputs.alt_funct,
             tv.inputs.enable_n,
@@ -106,14 +83,18 @@ module alu_testbench();
         );
 
         // Ensure all fields were read
-        if (field_count != `VECTOR_DIMENSION) begin
-            $display("Error reading file at line %d.", vector_num + 1);
-            $display("Expected %d fields, found %d", `VECTOR_DIMENSION, field_count);
+        if (field_count != `VECTOR_DIM) begin
+            $display("Error reading file at line %3d.", vector_num + 1);
+            $display("Expected %1d fields, found %1d", `VECTOR_DIM, field_count);
             $stop;
         end
 
         // Convert expected strings to logic
-        to_logic(output_strings.result, vector.expected.result, `XLEN);
+        if (output_str.result == "zzzzzzzz") begin
+            tv.expected.result = 32'hzzzzzzzz;
+        end else begin
+            field_count = $sscanf(output_str.result, "%h", tv.expected.result);
+        end
 
         vector_num = vector_num + 1;
     end
@@ -125,24 +106,27 @@ module alu_testbench();
         input Outputs       out;
         inout int           num_errors;
     begin
-        if (out !== vector.expected) begin
+        if (out !== tv.expected) begin
             $display("Compare error:");
-            $display("funct3 = %b", vector.inputs.funct3);
-            $display("     a = %h", vector.inputs.a);
-            $display("   imm = %h", vector.inputs.imm);
-            $display("result = %h (%h expected)", result, vector.expected.result);
+            $display("funct3 = %01h", tv.inputs.funct3);
+            $display("  alt  = %01h", tv.inputs.alt_funct);
+            $display("     a = %08h", tv.inputs.a);
+            $display("   imm = %03h", tv.inputs.imm);
+            $display("result = %08h (%08h expected)", out.result, tv.expected.result);
             num_errors = num_errors + 1;
         end
     end
     endtask
+
+    assign alu_b = $signed(vector.inputs.imm);
 
     alu dut(
         vector.inputs.enable_n,
         vector.inputs.funct3,
         vector.inputs.alt_funct,
         vector.inputs.a,
-        $signed(vector.inputs.imm),
-        output.result,
+        alu_b,
+        outputs.result
     );
 
     always begin
@@ -153,6 +137,8 @@ module alu_testbench();
     end
 
     initial begin
+        vector_num = 0;
+        num_errors = 0;
         open_file(`TEST_VECTOR_FILE_PATH, vector_file);
     end
 
@@ -164,13 +150,14 @@ module alu_testbench();
     always @(negedge clk) begin
         check_vector(vector, outputs, num_errors);
 
-        if ($feof(vector_file) || vector === 100'bx) begin
+        if ($feof(vector_file)) begin
             $display(
-                "%d tests completed with %d errors",
+                "%3d tests completed with %3d errors",
                  vector_num,
                  num_errors
             );
-            $finish;
+            $fclose(vector_file);
+            $stop;
         end
     end
 
