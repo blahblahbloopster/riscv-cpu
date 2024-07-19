@@ -3,7 +3,7 @@
  * Example 4.39 HDL Testbench with Test Vector File p 223
  */
 
-`define TEST_VECTOR_FILE "../tests/alu_reg_imm.tv"
+`define TEST_VECTOR_FILE_PATH "../tests/alu_reg_imm.tv"
 `define NUM_TESTS 10000
 `define VECTOR_SIZE 81
 `define VECTOR_DIM 6
@@ -34,7 +34,6 @@ module alu_testbench();
     } TestVector;
 
     logic                   clk;
-    logic [`XLEN-1:0]       b;
 
     TestVector              vector;
     Outputs                 outputs;
@@ -44,26 +43,13 @@ module alu_testbench();
     logic [`XLEN-1:0]       vector_num;
     logic [`XLEN-1:0]       num_errors;
 
-    alu dut(
-        vector.inputs.enable_n,
-        vector.inputs.funct3,
-        vector.inputs.alt_funct,
-        vector.inputs.a,
-        $signed(vector.inputs.imm),
-        output.result,
-    );
-
-    always begin
-        clk = 1;
-        #5;
-        clk = 0;
-        #5;
-    end
-
-    initial begin
+    task open_file;
+        input  string   file_path;
+        output int      file;
+    begin
         // Open test vector file
-        vector_file = $fopen(`TEST_VECTOR_FILE, "r");
-        if (vector_file == 0) begin
+        file = $fopen(file_path, "r");
+        if (file == 0) begin
             $display("Error: could not open test vector file.");
             $stop;
         end
@@ -71,6 +57,7 @@ module alu_testbench();
         // Ignore header
         field_count = $fscanf(vector_file, "%s\n");
     end
+    endtask
 
     // Convert string to logic value.
     // A string of "z" sets all bits of `val` to z.
@@ -95,6 +82,7 @@ module alu_testbench();
         endcase
     end
     endtask
+
 
     // Read next test vector in vector file
     task read_next_vector;
@@ -147,6 +135,26 @@ module alu_testbench();
         end
     end
     endtask
+
+    alu dut(
+        vector.inputs.enable_n,
+        vector.inputs.funct3,
+        vector.inputs.alt_funct,
+        vector.inputs.a,
+        $signed(vector.inputs.imm),
+        output.result,
+    );
+
+    always begin
+        clk = 1;
+        #5;
+        clk = 0;
+        #5;
+    end
+
+    initial begin
+        open_file(`TEST_VECTOR_FILE_PATH, vector_file);
+    end
 
     always @(posedge clk) begin
         #1;
