@@ -109,7 +109,7 @@ module alu_reg_imm_tb();
         if (out !== tv.expected) begin
             $display("Compare error:");
             $display("funct3 = %01h", tv.inputs.funct3);
-            $display("  alt  = %01h", tv.inputs.alt_funct);
+            $display("   alt = %01h", tv.inputs.alt_funct);
             $display("     a = %08h", tv.inputs.a);
             $display("   imm = %03h", tv.inputs.imm);
             $display("result = %08h (%08h expected)", out.result, tv.expected.result);

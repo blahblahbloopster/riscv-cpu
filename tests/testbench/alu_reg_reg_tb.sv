@@ -107,7 +107,7 @@ module alu_reg_reg_tb();
         if (out !== tv.expected) begin
             $display("Compare error:");
             $display("funct3 = %01h", tv.inputs.funct3);
-            $display("  alt  = %01h", tv.inputs.alt_funct);
+            $display("   alt = %01h", tv.inputs.alt_funct);
             $display("     a = %08h", tv.inputs.a);
             $display("     b = %08h", tv.inputs.b);
             $display("result = %08h (%08h expected)", out.result, tv.expected.result);
