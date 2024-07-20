@@ -44,7 +44,7 @@ module alu_reg_reg_tb();
         input  string   file_path;
         output int      file;
     begin
-        string _header;
+        string          _header;
 
         // Open test vector file
         file = $fopen(file_path, "r");
@@ -54,8 +54,7 @@ module alu_reg_reg_tb();
         end
 
         // Ignore header
-        $fgets(_header, file);
-        $display("Header: %s", _header);  // Debugging header content
+        void'($fgets(_header, file));
     end
     endtask
 
