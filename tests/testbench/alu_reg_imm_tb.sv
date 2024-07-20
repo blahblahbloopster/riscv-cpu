@@ -31,54 +31,44 @@ module alu_reg_imm_tb();
     } TestVector;
 
     logic                   clk;
+    logic [`XLEN-1:0]       alu_b;
 
     TestVector              vector;
     Outputs                 outputs;
 
-    logic [`XLEN-1:0]       alu_b;
-
     int                     vector_file;
-    int                     field_count;
     int unsigned            vector_num;
     int unsigned            num_errors;
 
-    task open_file;
-        input  string   file_path;
-        output int      file;
-    begin
-        string          _header;
+    function int open_file(string file_path);
+        string  _header;
 
         // Open test vector file
-        file = $fopen(file_path, "r");
-        if (file == 0) begin
+        open_file = $fopen(file_path, "r");
+        if (open_file == 0) begin
             $display("Error: could not open test vector file %s.", file_path);
             $stop;
         end
 
         // Ignore header
-        void'($fgets(_header, file));
-    end
-    endtask
+        void'($fgets(_header, open_file));
+    endfunction
 
     // Read next test vector in vector file
-    task read_next_vector;
-        input  int          fd;
-        output TestVector   tv;
-        inout  int          vector_num;
-    begin
-        int                 field_count;
-        OutputStrings       output_str;
+    function TestVector next_vector(int fd);
+        int             field_count;
+        OutputStrings   output_str;
 
         // Read file line
         field_count = $fscanf(
             fd,
             "%h %h %h %s %h %h\n",
-            tv.inputs.funct3,
-            tv.inputs.alt_funct,
-            tv.inputs.enable_n,
+            next_vector.inputs.funct3,
+            next_vector.inputs.alt_funct,
+            next_vector.inputs.enable_n,
             output_str.result,
-            tv.inputs.a,
-            tv.inputs.imm
+            next_vector.inputs.a,
+            next_vector.inputs.imm
         );
 
         // Ensure all fields were read
@@ -90,14 +80,11 @@ module alu_reg_imm_tb();
 
         // Convert expected strings to logic
         if (output_str.result == "zzzzzzzz") begin
-            tv.expected.result = 32'hzzzzzzzz;
+            next_vector.expected.result = `XLEN'hzzzzzzzz;
         end else begin
-            field_count = $sscanf(output_str.result, "%h", tv.expected.result);
+            void'($sscanf(output_str.result, "%h", next_vector.expected.result));
         end
-
-        vector_num = vector_num + 1;
-    end
-    endtask
+    endfunction
 
     // If DUT output doesn't equal expected output, print debug info
     task check_vector;
@@ -107,11 +94,12 @@ module alu_reg_imm_tb();
     begin
         if (out !== tv.expected) begin
             $display("Compare error:");
-            $display("funct3 = %01h", tv.inputs.funct3);
-            $display("   alt = %01h", tv.inputs.alt_funct);
-            $display("     a = %08h", tv.inputs.a);
-            $display("   imm = %03h", tv.inputs.imm);
-            $display("result = %08h (%08h expected)", out.result, tv.expected.result);
+            $display("  funct3 = %01h", tv.inputs.funct3);
+            $display("     alt = %01h", tv.inputs.alt_funct);
+            $display("       a = %08h", tv.inputs.a);
+            $display("     imm = %03h", tv.inputs.imm);
+            $display("  result = %08h", out.result);
+            $display("expected = %08h", tv.expected.result);
             num_errors = num_errors + 1;
         end
     end
@@ -138,12 +126,13 @@ module alu_reg_imm_tb();
     initial begin
         vector_num = 0;
         num_errors = 0;
-        open_file(`TEST_VECTOR_FILE_PATH, vector_file);
+        vector_file = open_file(`TEST_VECTOR_FILE_PATH);
     end
 
     always @(posedge clk) begin
         #1;
-        read_next_vector(vector_file, vector, vector_num);
+        vector = next_vector(vector_file);
+        vector_num = vector_num + 1;
     end
 
     always @(negedge clk) begin
