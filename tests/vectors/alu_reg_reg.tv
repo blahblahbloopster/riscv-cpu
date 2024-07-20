@@ -86,7 +86,7 @@ funct3 alt_funct enable_n expected a b
 5 0 0 7fffc000 ffff8000 00000001
 5 0 0 01ffff00 ffff8000 00000007
 5 0 0 0003fffe ffff8000 0000000e
-5 0 0 0001ffff ffff8001 0000001f
+5 0 0 0001ffff ffff8001 0000000f
 5 0 0 ffffffff ffffffff 00000000
 5 0 0 7fffffff ffffffff 00000001
 5 0 0 01ffffff ffffffff 00000007
