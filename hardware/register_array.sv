@@ -1,67 +1,67 @@
 `define XLEN 32
-`define SELECT_LEN 5
+`define REG_LEN 5
 `define HI_Z `XLEN'hzzzzzzzz
 `define ZERO `XLEN'h00000000
 
 module register_array (
-    input  logic                   clk,
-    input  logic                   reset_n,
-    input  logic                   enable_n,
-    input  logic [`SELECT_LEN-1:0] store,
-    input  logic [`SELECT_LEN-1:0] enable_a,
-    input  logic [`SELECT_LEN-1:0] enable_b,
-    input  logic [`XLEN-1:0]       store_value,
-    output logic [`XLEN-1:0]       a_bus,
-    output logic [`XLEN-1:0]       b_bus
+    input  logic                    clk,
+    input  logic                    reset_n,
+    input  logic                    enable_n,
+    input  logic [`SELECT_LEN-1:0]  rs1,
+    input  logic [`SELECT_LEN-1:0]  rs2,
+    input  logic [`SELECT_LEN-1:0]  rd,
+    input  logic [`XLEN-1:0]        rd_val,
+    output logic [`XLEN-1:0]        rs1_val,
+    output logic [`XLEN-1:0]        rs2_val
 );
 
-    logic [`XLEN-1:0] enable_a_decoded;
-    logic [`XLEN-1:0] enable_b_decoded;
-    logic [`XLEN-1:0] store_decoded;
+    logic [`XLEN-1:0]               rs1_decoded;
+    logic [`XLEN-1:0]               rs2_decoded;
+    logic [`XLEN-1:0]               rd_decoded;
 
-    tri [`XLEN-1:0] a_internal;
-    tri [`XLEN-1:0] b_internal;
+    tri [`XLEN-1:0]                 rs1_val_internal;
+    tri [`XLEN-1:0]                 rs2_val_internal;
 
     always_comb begin
-        store_decoded = !enable_n ? `XLEN'b1 << store : `ZERO;
-        enable_a_decoded = !enable_n ? `XLEN'b1 << enable_a : `ZERO;
-        enable_b_decoded = !enable_n ? `XLEN'b1 << enable_b : `ZERO;
-        a_bus = !enable_n ? a_internal : `HI_Z;
-        b_bus = !enable_n ? b_internal : `HI_Z;
+        rd_decoded = !enable_n ? `XLEN'b1 << rd : `ZERO;
+        rs1_decoded = !enable_n ? `XLEN'b1 << rs1 : `ZERO;
+        rs2_decoded = !enable_n ? `XLEN'b1 << rs2 : `ZERO;
+        rs1_val = !enable_n ? rs1_val_internal : `HI_Z;
+        rs2_val = !enable_n ? rs2_val_internal : `HI_Z;
     end
 
-    register R0(clk, reset_n, 1'b1, enable_a_decoded[0], enable_b_decoded[0], `XLEN'b0, a_internal, b_internal);
-    register R1(clk, reset_n, store_decoded[1], enable_a_decoded[1], enable_b_decoded[1], store_value, a_internal, b_internal);
-    register R2(clk, reset_n, store_decoded[2], enable_a_decoded[2], enable_b_decoded[2], store_value, a_internal, b_internal);
-    register R3(clk, reset_n, store_decoded[3], enable_a_decoded[3], enable_b_decoded[3], store_value, a_internal, b_internal);
-    register R4(clk, reset_n, store_decoded[4], enable_a_decoded[4], enable_b_decoded[4], store_value, a_internal, b_internal);
-    register R5(clk, reset_n, store_decoded[5], enable_a_decoded[5], enable_b_decoded[5], store_value, a_internal, b_internal);
-    register R6(clk, reset_n, store_decoded[6], enable_a_decoded[6], enable_b_decoded[6], store_value, a_internal, b_internal);
-    register R7(clk, reset_n, store_decoded[7], enable_a_decoded[7], enable_b_decoded[7], store_value, a_internal, b_internal);
-    register R8(clk, reset_n, store_decoded[8], enable_a_decoded[8], enable_b_decoded[8], store_value, a_internal, b_internal);
-    register R9(clk, reset_n, store_decoded[9], enable_a_decoded[9], enable_b_decoded[9], store_value, a_internal, b_internal);
-    register R10(clk, reset_n, store_decoded[10], enable_a_decoded[10], enable_b_decoded[10], store_value, a_internal, b_internal);
-    register R11(clk, reset_n, store_decoded[11], enable_a_decoded[11], enable_b_decoded[11], store_value, a_internal, b_internal);
-    register R12(clk, reset_n, store_decoded[12], enable_a_decoded[12], enable_b_decoded[12], store_value, a_internal, b_internal);
-    register R13(clk, reset_n, store_decoded[13], enable_a_decoded[13], enable_b_decoded[13], store_value, a_internal, b_internal);
-    register R14(clk, reset_n, store_decoded[14], enable_a_decoded[14], enable_b_decoded[14], store_value, a_internal, b_internal);
-    register R15(clk, reset_n, store_decoded[15], enable_a_decoded[15], enable_b_decoded[15], store_value, a_internal, b_internal);
-    register R16(clk, reset_n, store_decoded[16], enable_a_decoded[16], enable_b_decoded[16], store_value, a_internal, b_internal);
-    register R17(clk, reset_n, store_decoded[17], enable_a_decoded[17], enable_b_decoded[17], store_value, a_internal, b_internal);
-    register R18(clk, reset_n, store_decoded[18], enable_a_decoded[18], enable_b_decoded[18], store_value, a_internal, b_internal);
-    register R19(clk, reset_n, store_decoded[19], enable_a_decoded[19], enable_b_decoded[19], store_value, a_internal, b_internal);
-    register R20(clk, reset_n, store_decoded[20], enable_a_decoded[20], enable_b_decoded[20], store_value, a_internal, b_internal);
-    register R21(clk, reset_n, store_decoded[21], enable_a_decoded[21], enable_b_decoded[21], store_value, a_internal, b_internal);
-    register R22(clk, reset_n, store_decoded[22], enable_a_decoded[22], enable_b_decoded[22], store_value, a_internal, b_internal);
-    register R23(clk, reset_n, store_decoded[23], enable_a_decoded[23], enable_b_decoded[23], store_value, a_internal, b_internal);
-    register R24(clk, reset_n, store_decoded[24], enable_a_decoded[24], enable_b_decoded[24], store_value, a_internal, b_internal);
-    register R25(clk, reset_n, store_decoded[25], enable_a_decoded[25], enable_b_decoded[25], store_value, a_internal, b_internal);
-    register R26(clk, reset_n, store_decoded[26], enable_a_decoded[26], enable_b_decoded[26], store_value, a_internal, b_internal);
-    register R27(clk, reset_n, store_decoded[27], enable_a_decoded[27], enable_b_decoded[27], store_value, a_internal, b_internal);
-    register R28(clk, reset_n, store_decoded[28], enable_a_decoded[28], enable_b_decoded[28], store_value, a_internal, b_internal);
-    register R29(clk, reset_n, store_decoded[29], enable_a_decoded[29], enable_b_decoded[29], store_value, a_internal, b_internal);
-    register R30(clk, reset_n, store_decoded[30], enable_a_decoded[30], enable_b_decoded[30], store_value, a_internal, b_internal);
-    register R31(clk, reset_n, store_decoded[31], enable_a_decoded[31], enable_b_decoded[31], store_value, a_internal, b_internal);
+    zero_register X0(clk, reset_n, rs1_decoded[0], rs2_decoded[0], rs1_val_internal, rs2_val_internal);
+    register X1(clk, reset_n, rd_decoded[1], rs1_decoded[1], rs2_decoded[1], rd_val, rs1_val_internal, rs2_val_internal);
+    register X2(clk, reset_n, rd_decoded[2], rs1_decoded[2], rs2_decoded[2], rd_val, rs1_val_internal, rs2_val_internal);
+    register X3(clk, reset_n, rd_decoded[3], rs1_decoded[3], rs2_decoded[3], rd_val, rs1_val_internal, rs2_val_internal);
+    register X4(clk, reset_n, rd_decoded[4], rs1_decoded[4], rs2_decoded[4], rd_val, rs1_val_internal, rs2_val_internal);
+    register X5(clk, reset_n, rd_decoded[5], rs1_decoded[5], rs2_decoded[5], rd_val, rs1_val_internal, rs2_val_internal);
+    register X6(clk, reset_n, rd_decoded[6], rs1_decoded[6], rs2_decoded[6], rd_val, rs1_val_internal, rs2_val_internal);
+    register X7(clk, reset_n, rd_decoded[7], rs1_decoded[7], rs2_decoded[7], rd_val, rs1_val_internal, rs2_val_internal);
+    register X8(clk, reset_n, rd_decoded[8], rs1_decoded[8], rs2_decoded[8], rd_val, rs1_val_internal, rs2_val_internal);
+    register X9(clk, reset_n, rd_decoded[9], rs1_decoded[9], rs2_decoded[9], rd_val, rs1_val_internal, rs2_val_internal);
+    register X10(clk, reset_n, rd_decoded[10], rs1_decoded[10], rs2_decoded[10], rd_val, rs1_val_internal, rs2_val_internal);
+    register X11(clk, reset_n, rd_decoded[11], rs1_decoded[11], rs2_decoded[11], rd_val, rs1_val_internal, rs2_val_internal);
+    register X12(clk, reset_n, rd_decoded[12], rs1_decoded[12], rs2_decoded[12], rd_val, rs1_val_internal, rs2_val_internal);
+    register X13(clk, reset_n, rd_decoded[13], rs1_decoded[13], rs2_decoded[13], rd_val, rs1_val_internal, rs2_val_internal);
+    register X14(clk, reset_n, rd_decoded[14], rs1_decoded[14], rs2_decoded[14], rd_val, rs1_val_internal, rs2_val_internal);
+    register X15(clk, reset_n, rd_decoded[15], rs1_decoded[15], rs2_decoded[15], rd_val, rs1_val_internal, rs2_val_internal);
+    register X16(clk, reset_n, rd_decoded[16], rs1_decoded[16], rs2_decoded[16], rd_val, rs1_val_internal, rs2_val_internal);
+    register X17(clk, reset_n, rd_decoded[17], rs1_decoded[17], rs2_decoded[17], rd_val, rs1_val_internal, rs2_val_internal);
+    register X18(clk, reset_n, rd_decoded[18], rs1_decoded[18], rs2_decoded[18], rd_val, rs1_val_internal, rs2_val_internal);
+    register X19(clk, reset_n, rd_decoded[19], rs1_decoded[19], rs2_decoded[19], rd_val, rs1_val_internal, rs2_val_internal);
+    register X20(clk, reset_n, rd_decoded[20], rs1_decoded[20], rs2_decoded[20], rd_val, rs1_val_internal, rs2_val_internal);
+    register X21(clk, reset_n, rd_decoded[21], rs1_decoded[21], rs2_decoded[21], rd_val, rs1_val_internal, rs2_val_internal);
+    register X22(clk, reset_n, rd_decoded[22], rs1_decoded[22], rs2_decoded[22], rd_val, rs1_val_internal, rs2_val_internal);
+    register X23(clk, reset_n, rd_decoded[23], rs1_decoded[23], rs2_decoded[23], rd_val, rs1_val_internal, rs2_val_internal);
+    register X24(clk, reset_n, rd_decoded[24], rs1_decoded[24], rs2_decoded[24], rd_val, rs1_val_internal, rs2_val_internal);
+    register X25(clk, reset_n, rd_decoded[25], rs1_decoded[25], rs2_decoded[25], rd_val, rs1_val_internal, rs2_val_internal);
+    register X26(clk, reset_n, rd_decoded[26], rs1_decoded[26], rs2_decoded[26], rd_val, rs1_val_internal, rs2_val_internal);
+    register X27(clk, reset_n, rd_decoded[27], rs1_decoded[27], rs2_decoded[27], rd_val, rs1_val_internal, rs2_val_internal);
+    register X28(clk, reset_n, rd_decoded[28], rs1_decoded[28], rs2_decoded[28], rd_val, rs1_val_internal, rs2_val_internal);
+    register X29(clk, reset_n, rd_decoded[29], rs1_decoded[29], rs2_decoded[29], rd_val, rs1_val_internal, rs2_val_internal);
+    register X30(clk, reset_n, rd_decoded[30], rs1_decoded[30], rs2_decoded[30], rd_val, rs1_val_internal, rs2_val_internal);
+    register X31(clk, reset_n, rd_decoded[31], rs1_decoded[31], rs2_decoded[31], rd_val, rs1_val_internal, rs2_val_internal);
 
 endmodule
 
