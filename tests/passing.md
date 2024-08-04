@@ -1,0 +1,43 @@
+# RISC-V Instruction Test Status
+
+- [ ] lui
+- [ ] auipc
+- [ ] jal
+- [ ] jalr
+- [ ] beq
+- [ ] bne
+- [ ] blt
+- [ ] bge
+- [ ] bltu
+- [ ] bgeu
+- [ ] lb
+- [ ] lh
+- [ ] lw
+- [ ] lbu
+- [ ] lhu
+- [ ] sb
+- [ ] sh
+- [ ] sw
+- [x] addi
+- [x] slli
+- [x] slti
+- [x] sltiu
+- [x] xori
+- [x] srli
+- [x] srai
+- [x] ori
+- [x] andi
+- [x] add
+- [x] sll
+- [x] slt
+- [x] sltu
+- [x] xor
+- [x] srl
+- [x] sra
+- [x] or
+- [x] and
+- [ ] fence
+- [ ] fence.tso
+- [ ] ecall
+- [ ] ebreak
+
