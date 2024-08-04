@@ -1,61 +1,43 @@
 `define XLEN 32
-`define REG_SELECT_LEN 5
+`define REG_LEN 5
 `define BUS_HI_Z `XLEN'hzzzzzzzz
-`define SELECT_HI_Z `REG_SELECT_LEN'bzzzzz
+`define SELECT_HI_Z `REG_LEN'bzzzzz
 
 module branch (
-    input  logic clk,
-    input  logic enable_n,
+    input logic                 clk,
+    input logic                 enable_n,
 
-    input  logic [`XLEN-1:0] instruction,
-    input  logic [`XLEN-1:0] program_counter,
+    input logic [`XLEN-1:0]     pc,
 
-    output logic [`REG_SELECT_LEN-1:0] register_1,
-    output logic [`REG_SELECT_LEN-1:0] register_2,
-    input  logic [`XLEN-1:0] register_data_1,
-    input  logic [`XLEN-1:0] register_data_2,
+    input logic [`XLEN-1:0]     rs1_val,
+    input logic [`XLEN-1:0]     rs2_val,
+    input logic [2:0]           funct3,
+    input logic [11:0]          imm12,
 
-    output logic [`XLEN-1:0] alu_a,
-    output logic [`XLEN-1:0] alu_b,
-    output logic [2:0]       alu_op,
-    output logic             alu_signal,
-    input  logic [`XLEN-1:0] alu_out,
+    // move to cpu.sv?
+    // output logic [2:0]           alu_funct3,
+    // output logic                 alu_alt_funct,
 
-    output logic             load_new_program_counter,
-    output logic [`XLEN-1:0] new_program_counter
+    input logic [`XLEN-1:0]     alu_result,
+
+    output logic                branch,
+    output logic [`XLEN-1:0]    branch_pc
 );
 
     logic [12:0] offset;
 
-    always @(posedge clk) begin
-        if (!enable_n) begin
-            register_1 <= instruction[19:15];
-            register_2 <= instruction[24:20];
-        end else begin
-            register_1 <= `BUS_HI_Z;
-            register_2 <= `BUS_HI_Z;
-        end
-    end
-
     always_comb begin
         if (!enable_n) begin
-            alu_a = register_data_1;
-            alu_b = register_data_2;
+            offset = {imm12, 1'b0};
 
-            alu_op = {~instruction[14], instruction[14], instruction[13]};
-            alu_signal = 0'b0;
-            load_new_program_counter = |alu_out ^ instruction[12];
+            // alu_op = {~funct3[2], funct3[2], funct3[1]};
+            // alu_alt_funct = 0'b0;
+            branch = |alu_result ^ funct3[0];
 
-            offset = {instruction[31], instruction[7], instruction[30:25],
-                      instruction[11:8]};
-            new_program_counter = program_counter + offset;
+            branch_pc = program_counter + offset;
         end else begin
-            alu_a = `BUS_HI_Z;
-            alu_b = `BUS_HI_Z;
-            alu_op = 3'bzzz;
-            alu_signal = 1'bz;
-            load_new_program_counter = 1'bz;
-            new_program_counter = `BUS_HI_Z;
+            branch = 1'bz;
+            branch_pc = `BUS_HI_Z;
         end
     end
 
