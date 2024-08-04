@@ -40,12 +40,12 @@ module instruction_decode (
     output logic [`REG_LEN-1:0]     rs2,
     output logic [`REG_LEN-1:0]     rd,
                                 
-    output logic [12:0]             imm12,
+    output logic [11:0]             imm12,
     output logic [19:0]             imm20,
 );
 
     logic [6:0] opcode = instruction[6:0];
-    funct3  = instruction[14:12];
+    assign funct3 = instruction[14:12];
     InstructionType instruction_type;
 
     case (opcode)
