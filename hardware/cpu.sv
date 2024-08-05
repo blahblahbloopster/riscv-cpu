@@ -1,40 +1,40 @@
 `define XLEN 32
-`define REG_SELECT_LEN 5
+`define REG_LEN 5
 
 module cpu (
     input logic clk,
     input logic reset_n,
 );
 
-    tri0 logic [`XLEN-1:0] instruction;
-    
-    tri0 logic             alu_enable_n;
-    tri0 logic [2:0]       alu_opcode;
-    tri0 logic             alu_signal;
-    tri0 logic [`XLEN-1:0] alu_a;
-    tri0 logic [`XLEN-1:0] alu_b;
-    tri0 logic [`XLEN-1:0] alu_result;
+    tri0 logic [`XLEN-1:0]      instruction;
 
-    tri0 logic             branch_enable_n;
-    tri0 logic [`XLEN-1:0] branch_register_1;
-    tri0 logic [`XLEN-1:0] branch_register_2;
-    tri0 logic [`XLEN-1:0] branch_register_data_1;
-    tri0 logic [`XLEN-1:0] branch_register_data_2;
-    tri0 logic [`XLEN-1:0] branch_compare_data_1;
-    tri0 logic [`XLEN-1:0] branch_compare_data_2;
-    tri0 logic [`XLEN-1:0] branch_alu_out;
+    tri0 logic [6:0]            opcode;
+    tri0 logic [2:0]            funct3;
+    tri0 logic [6:0]            funct7;
+    tri0 logic [`REG_LEN-1:0]   rs1;
+    tri0 logic [`REG_LEN-1:0]   rs2;
+    tri0 logic [`REG_LEN-1:0]   rd;
+    tri0 logic [12:0]           imm12;
+    tri0 logic [19:0]           imm20;
 
-    tri0 logic             pc_load;
-    tri0 logic [`XLEN-1:0] pc_new_address;
-    tri0 logic [`XLEN-1:0] pc_address;
+    tri0 logic                  reg_array_enable_n;
+    tri0 logic [`XLEN-1:0]      rs1_val;
+    tri0 logic [`XLEN-1:0]      rs2_val;
+    tri0 logic [`XLEN-1:0]      rd_val;
 
-    tri0 logic                       reg_array_enable_n;
-    tri0 logic [`REG_SELECT_LEN-1:0] reg_array_store;
-    tri0 logic [`REG_SELECT_LEN-1:0] reg_array_enable_a;
-    tri0 logic [`REG_SELECT_LEN-1:0] reg_array_enable_b;
-    tri0 logic [`XLEN-1:0]           reg_array_store_value;
-    tri0 logic [`XLEN-1:0]           reg_array_a_bus;
-    tri0 logic [`XLEN-1:0]           reg_array_b_bus;
+    tri0 logic                  alu_enable_n;
+    tri0 logic                  alu_alt_funct;
+    tri0 logic [`XLEN-1:0]      alu_a;
+    tri0 logic [`XLEN-1:0]      alu_b;
+    tri0 logic [`XLEN-1:0]      alu_result;
+
+    tri0 logic                  branch_enable_n;
+    tri0 logic                  branch;
+    tri0 logic [`XLEN-1:0]      branch_pc;
+
+    tri0 logic                  pc_load;
+    tri0 logic [`XLEN-1:0]      pc_new_address;
+    tri0 logic [`XLEN-1:0]      pc_address;
 
     memory memory (
         .clk(clk),
@@ -73,27 +73,25 @@ module cpu (
         .clk(clk),
         .reset_n(reset_n),
         .enable_n(reg_array_enable_n),
-        .store(reg_array_store),
-        .enable_a(reg_array_enable_a),
-        .enable_b(reg_array_enable_b),
-        .store_value(reg_array_store_value),
-        .a_bus(reg_array_a_bus),
-        .b_bus(reg_array_b_bus),
+        .rs1(rs1),
+        .rs2(rs2),
+        .rd(rd),
+        .rd_val(rd_val),
+        .rs1_val(rs1_val),
+        .rs2_val(rs2_val),
     );
 
-    // opcode modules
     branch branch (
         .clk(clk),
         .enable_n(branch_enable_n),
-        .instruction(instruction),
-        .program_counter(program_counter),
-        .register_1(reg_array_enable_a),
-        .register_2(reg_array_enable_b),
-        .register_data_1(reg_array_a_bus),
-        .register_data_2(reg_array_b_bus),
-        .compare_data_1(branch_compare_data_1),
-        .compare_data_2(branch_compare_data_2),
-        .compare_result(branch_compare_result),
+        .pc(program_counter),
+        .rs1_val(rs1_val),
+        .rs2_val(rs2_val),
+        .funct3(funct3),
+        .imm12(imm12),
+        .alu_result(alu_result),
+        .branch(branch),
+        .branch_pc(branch_pc),
     );
 
     load load(
@@ -101,8 +99,8 @@ module cpu (
         .enable_n(load_enable_n),
         .register_1(reg_array_enable_a),
         .register_2(reg_array_enable_b),
-        .register_data_1(reg_array_a_bus),
-        .register_data_2(reg_array_b_bus),
+        .register_data_1(rs1_val),
+        .register_data_2(rs2_val),
         .instruction(instruction),
         .memory_busy(busy_main),
         .register_store(reg_array_store),
@@ -119,8 +117,8 @@ module cpu (
         .enable_n(store_enable_n),
         .register_1(reg_array_enable_a),
         .register_2(reg_array_enable_b),
-        .register_data_1(reg_array_a_bus),
-        .register_data_2(reg_array_b_bus),
+        .register_data_1(rs1_val),
+        .register_data_2(rs2_val),
         .instruction(instruction),
         .memory_busy(busy_main),
         .register_store(reg_array_store),
@@ -131,5 +129,6 @@ module cpu (
         .memory_write_request(write_request_main),
         .busy(load_busy),
     );
+
 endmodule
 
